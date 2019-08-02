@@ -14,8 +14,8 @@ provides a pre-built set of ZAMS models, these have a metallicity
 :math:`Z=0.02`; since we'll want to explore the effects of changing
 the metallicity, we'll also be creating our own custom ZAMS model.
 
-Once we've got our model working, we'll modify our ``run
-_star_extras.f90`` file to run the `GYRE
+Once we've got our model working, we'll modify our
+``run_star_extras.f90`` file to run the `GYRE
 <https://bitbucket.org/rhdtownsend/gyre/wiki/Home>`_ oscillation code
 after each timestep, calculating the star's radial oscillation
 frequencies.
