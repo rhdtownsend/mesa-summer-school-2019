@@ -1,0 +1,15 @@
+! PGstar inlist file for GYRE in MESA / MiniLab 1
+!
+! (ZAMS to TAMS)
+
+&pgstar
+
+  ! Show HR diagram
+
+  HR_win_flag = .true.
+
+  ! Show temperature/density profile
+
+  TRho_Profile_win_flag = .true.
+
+/ ! end of pgstar namelist
