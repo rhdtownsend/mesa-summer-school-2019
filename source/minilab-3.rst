@@ -7,7 +7,7 @@ MiniLab 3: Plotting Wavefunctions
 Overview
 ========
 
-In Minilab 2, we found that the periods of the fundamental and
+In :ref:`MiniLab 2 <minilab-2>`, we found that the periods of the fundamental and
 first-overtone radial modes scale approximately with the dynamical
 timescale, :math:`P \propto \tau_{\rm dyn}`. In MiniLab 3, we're going
 to examine the mode radial displacement wavefunctions :math:`\xi_{r}`,
@@ -116,7 +116,9 @@ which we'll store the radial displacement wavefunctions we've calculated.
 
    Modify ``how_many_extra_profile_columns`` to set the number of
    columns, and ``data_for_extra_profile_columns`` to set up the names
-   and values of the columns.
+   and values of the columns. Be sure to check ``s%x_logical_ctrl(1)``
+   before setting the ``vals`` array, as we did :ref:`here
+   <minilab-2-add-hist-cols>` when adding history columns .
 
 Running the Code
 ================
@@ -126,8 +128,54 @@ the code.
 
 .. admonition:: Exercise
 
-   Check that the profile files written to ``LOGS/history.data`` contain
-   two extra columns, containing the radial displacement wavefunction data.
+   Check that the profile files written to ``LOGS/profileN.data``
+   (where ``N`` is an integer) contain two extra columns, containing
+   the radial displacement wavefunction data.
+
+At the end of this run, you'll likely find that the code crashes with
+an error message something like this:
+
+.. code-block:: console
+
+  At line 239 of file ../src/run_star_extras.f90
+  Fortran runtime error: Array bound mismatch for dimension 1 of array 'vals' (1917/1910)
+
+We'll address this error in the following step.
+
+Fixing the Crash
+================
+
+The code crashes at the end of execution because the
+``extras_check_model`` hook (and hence the ``run_gyre`` and
+``process_mode`` routines) doesn't get called before the final call to
+``data_for_extra_profile_columns``. Therefore, the ``xi_r_f`` and
+``xi_r_1o`` arrays contain data from the previous timestep, when the
+model had a different number of grid points. Attempting to copy data
+from these arrays into the ``vals`` array triggers the crash, because
+the arrays have different sizes.
+
+To fix this problem, we have to modify
+``data_for_extra_profile_columns`` to check whether ``run_gyre`` has
+been called since the beginning of the timestep. If not, it should
+make the call itself, thereby updating the ``xi_r_f`` and ``xi_r_1o``
+arrays.
+
+.. admonition:: Excercise
+
+   Add a new module variable to ``run_star_extras.f90`` (see
+   :ref:`here <minilab-2-mod-vars>` for a reminder of how to do this),
+   with name ``gyre_has_run`` and type ``logical``. Then
+
+   - modify ``extras_start_step`` to initialize ``gyre_has_run`` to
+     ``.false.`` at the beginning of each step.
+
+   - modify ``run_gyre`` to set ``gyre_has_run`` to ``.true.`` after
+     GYRE has been run.
+
+   - modify ``data_for_extra_profile_columns`` to call ``run_gyre`` if
+     ``gyre_has_run`` is ``.false.``.
+
+   Be sure to check that these changes fix the crash.
 
 Plotting the Wavefunctions
 ==========================
@@ -150,3 +198,4 @@ somewhere between the center and the surface, while the former does
 not. This sign change means that the effective wavelength of the first
 overtone is shorter --- and hence, its frequency is higher, and its
 period shorter.
+
