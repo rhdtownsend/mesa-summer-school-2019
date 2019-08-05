@@ -68,7 +68,9 @@ illustrates how to set up the ``xi_r_f`` variable for the fundamental
 mode:
 
 .. code-block:: fortran
-     :emphasize-lines: 11-
+     :emphasize-lines: 1,13-
+
+     integer :: k
 
      ! Print out radial order and eigenfrequency
 
@@ -96,10 +98,14 @@ mode:
 
       endif
 
-Note how we first deallocate ``xi_r_f`` (if currently allocated), and
-then allocate it at the correct size (``md%n_k`` is the number of grid
-points). Note also how we reverse the order of elements in ``xi_r_f``
-after setting it up.
+(Don't overlook the first, highlighted line, where we declare a new
+integer variable ``k``).
+
+In this code, we first deallocate ``xi_r_f`` (if currently allocated),
+and then allocate it at the correct size (``md%n_k`` is the number of
+grid points). Following that, we loop over the grid index ``k``,
+storing values in the ``xi_r_f`` array. . As a final step, we reverse
+the order of elements in this array.
 
 .. admonition:: Exercise
       
@@ -119,6 +125,17 @@ which we'll store the radial displacement wavefunctions we've calculated.
    and values of the columns. Be sure to check ``s%x_logical_ctrl(1)``
    before setting the ``vals`` array, as we did :ref:`here
    <minilab-2-add-hist-cols>` when adding history columns .
+
+Note that the ``vals`` array in ``data_for_extra_profile_columns`` is
+*two-dimensional* --- the first dimension is grid location, and the
+second dimension is column number. So, to store ``xi_r_f`` into the
+first column of ``vals``, we could use Fortran's array-slice notation
+like this:
+
+.. code-block:: fortran
+
+   vals(:,1) = xi_r_f
+
 
 Running the Code
 ================

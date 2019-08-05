@@ -215,7 +215,9 @@ wrinkle here is that GYRE indexes its grid points in the opposite
 order to MESA. With this in mind, the following highlighted code
 illustrates how to set up the <code class="docutils literal notranslate"><span class="pre">xi_r_f</span></code> variable for the fundamental
 mode:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! Print out radial order and eigenfrequency</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="kt">integer</span> <span class="kd">::</span> <span class="n">k</span>
+</span>
+<span class="c">! Print out radial order and eigenfrequency</span>
 
 <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Found mode: radial order, frequency = &#39;</span><span class="p">,</span> <span class="n">md</span><span class="p">%</span><span class="n">n_pg</span><span class="p">,</span> <span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">))</span>
 
@@ -242,10 +244,13 @@ mode:</p>
 </span><span class="hll"> <span class="n">endif</span>
 </span></pre></div>
 </div>
-<p>Note how we first deallocate <code class="docutils literal notranslate"><span class="pre">xi_r_f</span></code> (if currently allocated), and
-then allocate it at the correct size (<code class="docutils literal notranslate"><span class="pre">md%n_k</span></code> is the number of grid
-points). Note also how we reverse the order of elements in <code class="docutils literal notranslate"><span class="pre">xi_r_f</span></code>
-after setting it up.</p>
+<p>(Don’t overlook the first, highlighted line, where we declare a new
+integer variable <code class="docutils literal notranslate"><span class="pre">k</span></code>).</p>
+<p>In this code, we first deallocate <code class="docutils literal notranslate"><span class="pre">xi_r_f</span></code> (if currently allocated),
+and then allocate it at the correct size (<code class="docutils literal notranslate"><span class="pre">md%n_k</span></code> is the number of
+grid points). Following that, we loop over the grid index <code class="docutils literal notranslate"><span class="pre">k</span></code>,
+storing values in the <code class="docutils literal notranslate"><span class="pre">xi_r_f</span></code> array. . As a final step, we reverse
+the order of elements in this array.</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p>Add further code to <code class="docutils literal notranslate"><span class="pre">process_mode</span></code>, to store the radial
@@ -262,6 +267,14 @@ which we’ll store the radial displacement wavefunctions we’ve calculated.</p
 columns, and <code class="docutils literal notranslate"><span class="pre">data_for_extra_profile_columns</span></code> to set up the names
 and values of the columns. Be sure to check <code class="docutils literal notranslate"><span class="pre">s%x_logical_ctrl(1)</span></code>
 before setting the <code class="docutils literal notranslate"><span class="pre">vals</span></code> array, as we did <a class="reference internal" href="minilab-2.html#minilab-2-add-hist-cols"><span class="std std-ref">here</span></a> when adding history columns .</p>
+</div>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">vals</span></code> array in <code class="docutils literal notranslate"><span class="pre">data_for_extra_profile_columns</span></code> is
+<em>two-dimensional</em> — the first dimension is grid location, and the
+second dimension is column number. So, to store <code class="docutils literal notranslate"><span class="pre">xi_r_f</span></code> into the
+first column of <code class="docutils literal notranslate"><span class="pre">vals</span></code>, we could use Fortran’s array-slice notation
+like this:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">vals</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">xi_r_f</span>
+</pre></div>
 </div>
 </div>
 </div>
