@@ -209,7 +209,7 @@ code at the appropriate place near the top of <code class="docutils literal notr
 <code class="docutils literal notranslate"><span class="pre">period_1o</span></code> variables are preserved throughout program execution.</p>
 </div>
 <div class="section" id="setting-module-variables">
-<h3>Setting Module Variables<a class="headerlink" href="#setting-module-variables" title="Permalink to this headline">¶</a></h3>
+<span id="minilab-2-mod-vars"></span><h3>Setting Module Variables<a class="headerlink" href="#setting-module-variables" title="Permalink to this headline">¶</a></h3>
 <p>Let’s now modify the <code class="docutils literal notranslate"><span class="pre">process_mode</span></code> callback routine to set these
 two module variables. As a reminder, <code class="docutils literal notranslate"><span class="pre">process_mode</span></code> is called each
 time GYRE finds a mode. Therefore, we have to add checks to see
@@ -252,7 +252,7 @@ of the first overtone into <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="section" id="adding-history-columns">
-<h3>Adding History Columns<a class="headerlink" href="#adding-history-columns" title="Permalink to this headline">¶</a></h3>
+<span id="minilab-2-add-hist-cols"></span><h3>Adding History Columns<a class="headerlink" href="#adding-history-columns" title="Permalink to this headline">¶</a></h3>
 <p>We’re now in a position to add two extra columns to history output, in
 which we’ll store the periods we’ve calculated. First, edit
 <code class="docutils literal notranslate"><span class="pre">how_many_extra_history_columns</span></code> to set the number of columns (here,
@@ -269,10 +269,22 @@ the names and values of the two extra columns:</p>
 <span class="hll"><span class="n">names</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;period_f&#39;</span>
 </span><span class="hll"><span class="n">names</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;period_1o&#39;</span>
 </span><span class="hll">
-</span><span class="hll"><span class="n">vals</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">period_f</span>
-</span><span class="hll"><span class="n">vals</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="n">period_1o</span>
+</span><span class="hll"><span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">%</span><span class="n">x_logical_ctrl</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="k">then</span>
+</span><span class="hll">
+</span><span class="hll"><span class="k">   </span><span class="n">vals</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">period_f</span>
+</span><span class="hll">   <span class="n">vals</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="n">period_1o</span>
+</span><span class="hll">
+</span><span class="hll"><span class="k">else</span>
+</span><span class="hll">
+</span><span class="hll"><span class="k">   </span><span class="n">vals</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.</span>
+</span><span class="hll">   <span class="n">vals</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">endif</span>
 </span></pre></div>
 </div>
+<p>Note that we check <code class="docutils literal notranslate"><span class="pre">s%x_logical_ctrl(1)</span></code> before setting the <code class="docutils literal notranslate"><span class="pre">vals</span></code>
+array; that way, we avoid copying undefined values from <code class="docutils literal notranslate"><span class="pre">period_f</span></code>
+and <code class="docutils literal notranslate"><span class="pre">period_1o</span></code> if running GYRE has been skipped.</p>
 </div>
 </div>
 <div class="section" id="running-the-code">

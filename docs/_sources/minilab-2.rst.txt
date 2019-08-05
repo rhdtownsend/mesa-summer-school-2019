@@ -58,6 +58,8 @@ code at the appropriate place near the top of ``run_star_extras.f90``:
 The ``save`` attributes ensure that the values of the ``period_f`` and
 ``period_1o`` variables are preserved throughout program execution.
 
+.. _minilab-2-mod-vars:
+
 Setting Module Variables
 ------------------------
 
@@ -107,6 +109,8 @@ code to the ``process_mode`` subroutine:
       
    Add further code to ``process_mode``, to store the period
    of the first overtone into ``period_1o``.
+
+.. _minilab-2-add-hist-cols:
    
 Adding History Columns
 ----------------------
@@ -134,8 +138,21 @@ the names and values of the two extra columns:
     names(1) = 'period_f'
     names(2) = 'period_1o'
 
-    vals(1) = period_f
-    vals(2) = period_1o
+    if (s%x_logical_ctrl(1)) then
+
+       vals(1) = period_f
+       vals(2) = period_1o
+
+    else
+
+       vals(1) = 0.
+       vals(2) = 0.
+
+    endif
+
+Note that we check ``s%x_logical_ctrl(1)`` before setting the ``vals``
+array; that way, we avoid copying undefined values from ``period_f``
+and ``period_1o`` if running GYRE has been skipped.
 
 Running the Code
 ================
