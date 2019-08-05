@@ -29,6 +29,10 @@ module run_star_extras
   real(dp), allocatable, save :: xi_r_f(:)
   real(dp), allocatable, save :: xi_r_1o(:)
 
+  ! Flag to check if GYRE has run
+
+  logical, save :: gyre_has_run
+
 contains
 
   subroutine extras_controls(id, ierr)
@@ -111,6 +115,8 @@ contains
 
     ! >>> Insert additional code below
 
+    gyre_has_run = .false.
+
     ! Set return value
 
     extras_start_step = 0
@@ -184,8 +190,17 @@ contains
     names(1) = 'period_f'
     names(2) = 'period_1o'
 
-    vals(1) = period_f
-    vals(2) = period_1o
+    if (s%x_logical_ctrl(1)) then
+
+       vals(1) = period_f
+       vals(2) = period_1o
+
+    else
+
+       vals(1) = 0.
+       vals(2) = 0.
+
+    endif
 
   end subroutine data_for_extra_history_columns
 
@@ -236,8 +251,19 @@ contains
     names(1) = 'xi_r_f'
     names(2) = 'xi_r_1o'
 
-    vals(:,1) = xi_r_f
-    vals(:,2) = xi_r_1o
+    if (s%x_logical_ctrl(1)) then
+
+       if (.NOT. gyre_has_run) call run_gyre(id, ierr)
+
+       vals(:,1) = xi_r_f
+       vals(:,2) = xi_r_1o
+
+    else
+
+       vals(:,1) = 0.
+       vals(:,2) = 0.
+
+    endif
 
   end subroutine data_for_extra_profile_columns
 
@@ -266,6 +292,10 @@ contains
     ! Run GYRE to get modes
 
     call gyre_get_modes(0, process_mode, ipar, rpar)
+
+    ! Indicate that GYRE has run
+
+    gyre_has_run = .true.
 
   contains
 

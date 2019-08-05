@@ -132,7 +132,7 @@ contains
        call run_gyre(id, ierr)
     endif
 
-! Set return value
+    ! Set return value
 
     extras_check_model = keep_going
 
@@ -179,8 +179,17 @@ contains
     names(1) = 'period_f'
     names(2) = 'period_1o'
 
-    vals(1) = period_f
-    vals(2) = period_1o
+    if (s%x_logical_ctrl(1)) then
+
+       vals(1) = period_f
+       vals(2) = period_1o
+
+    else
+
+       vals(1) = 0.
+       vals(2) = 0.
+
+    endif
 
   end subroutine data_for_extra_history_columns
 
