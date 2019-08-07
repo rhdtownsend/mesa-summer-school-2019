@@ -30,7 +30,7 @@ working directory from MiniLab 3 (with all the changes you have made):
 
 Alternatively, if you were unable to get things working with MiniLab
 3, then you can grab a working directory for the MaxiLab from `here
-<http://www.astro.wisc.edu/~townsend/resource/teaching/summer-school-2019/townsend-2019-maxi.tar.gz>`_.
+<http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-maxi.tar.gz>`_.
 
 Enabling Non-Adiabatic Effects
 ==============================

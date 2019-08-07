@@ -24,7 +24,7 @@ working directory from MiniLab 2 (with all the changes you have made):
 
 Alternatively, if you were unable to get things working with MiniLab
 2, then you can grab a working directory for MiniLab 3 from `here
-<http://www.astro.wisc.edu/~townsend/resource/teaching/summer-school-2019/townsend-2019-mini-3.tar.gz>`_.
+<http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-3.tar.gz>`_.
 
 Adding Wavefunctions to Profile Output
 ======================================

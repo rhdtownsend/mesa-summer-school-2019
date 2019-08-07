@@ -20,7 +20,7 @@ directory from MiniLab 1 (with all the changes you have made):
 
 Alternatively, if you were unable to get things working with MiniLab
 1, then you can grab a working directory for MiniLab 2 from `here
-<http://www.astro.wisc.edu/~townsend/resource/teaching/summer-school-2019/townsend-2019-mini-2.tar.gz>`_.
+<http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-2.tar.gz>`_.
 
 Adding Periods to History Output
 ================================
