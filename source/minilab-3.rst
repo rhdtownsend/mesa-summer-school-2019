@@ -115,8 +115,8 @@ the order of elements in this array.
 Adding Profile Columns
 ----------------------
 
-Next, we'll add two extra columns to history output, in
-which we'll store the radial displacement wavefunctions we've calculated.
+Next, we'll add two extra columns to profile output, in which we'll
+store the radial displacement wavefunctions we've calculated.
 
 .. admonition:: Exercise
 
@@ -135,7 +135,6 @@ like this:
 .. code-block:: fortran
 
    vals(:,1) = xi_r_f
-
 
 Running the Code
 ================
