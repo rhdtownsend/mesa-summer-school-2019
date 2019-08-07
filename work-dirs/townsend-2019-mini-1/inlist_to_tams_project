@@ -60,11 +60,6 @@
   use_gold_tolerances = .true.
   use_dedt_form_of_energy_eqn = .true.
    
-  ! Opacities
-
-  use_Type2_opacities = .true.
-  Zbase = 2d-2
-
   ! Convective mixing
 
   mixing_length_alpha = 1.8d0
