@@ -4,6 +4,7 @@
 
 &mode
 	l = 0
+	n_pg_max = 2
 /
 
 &osc
