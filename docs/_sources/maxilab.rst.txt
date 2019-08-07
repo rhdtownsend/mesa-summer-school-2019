@@ -9,7 +9,7 @@ Overview
 
 In the MiniLabs, we've been running GYRE within the adiabatic
 approximation, where thermal exchanges between neighboring oscillating
-elements is neglected. For main sequence stars, these exchanges
+elements are neglected. For main-sequence stars, these exchanges
 typically have only a small effect on the periods/frequencies of
 oscillation modes; and so, if we're interested mainly in interpreting
 these periods, the approximation is usually a good one.
@@ -18,14 +18,14 @@ In the MaxiLab, we're going to move beyond the adiabatic
 approximation. This will allow us to explore which modes are unstable
 in our model star, and by what mechanism. Then, by extending these
 non-adiabatic calculations to stars with other masses, we will map out
-the :\math:`\beta Cepheid` instability strip.
+the :math:`\beta` Cephei instability strip.
 
 As the very first step, make a copy of your
 working directory from MiniLab 3 (with all the changes you have made):
 
 .. code-block:: console
 
-   $ cp -a townsend-2019-mini-2 townsend-2019-maxi
+   $ cp -a townsend-2019-mini-3 townsend-2019-maxi
    $ cd townsend-2019-maxi
 
 Alternatively, if you were unable to get things working with MiniLab
@@ -140,11 +140,12 @@ Exploring the Driving
 
 If all went well, the preceding steps will have established that the F
 and 1-O modes become unstable when the star reaches an age
-:math:`\approx 7\,{\rm Myr}`, about halfway through its main-sequence
-evolution. Because our model is representative of a :math:`\beta`
-Cephei star, we expect the :math:`kappa` mechanism operating on the
-iron opacity bump is responsible for driving the modes toward
-instability. We're going to confirm that this is the case.
+:math:`\approx 9\,{\rm Myr}`, about three-quarters of the way through
+its main-sequence evolution. Because our model is representative of a
+:math:`\beta` Cephei star, we expect the :math:`\kappa` mechanism
+operating on the iron opacity bump is responsible for driving the
+modes toward instability. We're going to confirm that this is the
+case.
 
 Adding Differential Work to Profile Output
 ------------------------------------------
@@ -157,12 +158,13 @@ damped, we study the differential work :math:`{\rm d}W/{\rm d}x`. The change
 
    W = \int_{0}^{1} \frac{{\rm d}W}{{\rm d}x} \, {\rm d} x,
 
-where :math:`x \equiv r/R` is the fractional radius. It can be shown
-that :math:`W \propto \sigma_{\rm I}`; it therefore follows that if
-:\math:`W > 0` then the mode is unstable. Clearly, regions of the star
-where :math:`{\rm d}W/{\rm d}x > 0` contribute toward driving the
-mode, while regions with :math:`{\rm d}W/{\rm d}x < 0` contribute
-toward damping.
+where :math:`x \equiv r/R` is the fractional radius.
+
+It can be shown that :math:`W \propto \sigma_{\rm I}`; it therefore
+follows that if :math:`W > 0` then the mode is unstable. Clearly,
+regions of the star where :math:`{\rm d}W/{\rm d}x > 0` contribute
+toward driving the mode, while regions with :math:`{\rm d}W/{\rm d}x <
+0` contribute toward damping.
 
 .. admonition:: Exercise
 
@@ -200,8 +202,8 @@ Repeat the ZAMS-to-TAMS run, and think about the following questions:
 
 - Where in the star is the driving strongest?
 
-- How does the driving region relate to the peak in the opacity data
-  around :math:`\log T \approx 5.2` (the 'iron bump')?
+- How does this driving region relate to the peak in the opacity data
+  around :math:`\log T \approx 5.3` (the 'iron bump')?
 
 - Where in the star does damping occur?
 

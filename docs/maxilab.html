@@ -175,7 +175,7 @@
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>In the MiniLabs, we’ve been running GYRE within the adiabatic
 approximation, where thermal exchanges between neighboring oscillating
-elements is neglected. For main sequence stars, these exchanges
+elements are neglected. For main-sequence stars, these exchanges
 typically have only a small effect on the periods/frequencies of
 oscillation modes; and so, if we’re interested mainly in interpreting
 these periods, the approximation is usually a good one.</p>
@@ -183,10 +183,10 @@ these periods, the approximation is usually a good one.</p>
 approximation. This will allow us to explore which modes are unstable
 in our model star, and by what mechanism. Then, by extending these
 non-adiabatic calculations to stars with other masses, we will map out
-the :math:<cite>beta Cepheid</cite> instability strip.</p>
+the <span class="math notranslate nohighlight">\(\beta\)</span> Cephei instability strip.</p>
 <p>As the very first step, make a copy of your
 working directory from MiniLab 3 (with all the changes you have made):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cp -a townsend-2019-mini-2 townsend-2019-maxi
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cp -a townsend-2019-mini-3 townsend-2019-maxi
 <span class="gp">$</span> <span class="nb">cd</span> townsend-2019-maxi
 </pre></div>
 </div>
@@ -282,11 +282,12 @@ positive <em>and</em> negative growth rates.</p>
 <h2>Exploring the Driving<a class="headerlink" href="#exploring-the-driving" title="Permalink to this headline">¶</a></h2>
 <p>If all went well, the preceding steps will have established that the F
 and 1-O modes become unstable when the star reaches an age
-<span class="math notranslate nohighlight">\(\approx 7\,{\rm Myr}\)</span>, about halfway through its main-sequence
-evolution. Because our model is representative of a <span class="math notranslate nohighlight">\(\beta\)</span>
-Cephei star, we expect the <span class="math notranslate nohighlight">\(kappa\)</span> mechanism operating on the
-iron opacity bump is responsible for driving the modes toward
-instability. We’re going to confirm that this is the case.</p>
+<span class="math notranslate nohighlight">\(\approx 9\,{\rm Myr}\)</span>, about three-quarters of the way through
+its main-sequence evolution. Because our model is representative of a
+<span class="math notranslate nohighlight">\(\beta\)</span> Cephei star, we expect the <span class="math notranslate nohighlight">\(\kappa\)</span> mechanism
+operating on the iron opacity bump is responsible for driving the
+modes toward instability. We’re going to confirm that this is the
+case.</p>
 <div class="section" id="adding-differential-work-to-profile-output">
 <h3>Adding Differential Work to Profile Output<a class="headerlink" href="#adding-differential-work-to-profile-output" title="Permalink to this headline">¶</a></h3>
 <p>To analyze where in the star a given mode is being driven and/or
@@ -294,12 +295,12 @@ damped, we study the differential work <span class="math notranslate nohighlight
 <span class="math notranslate nohighlight">\(W\)</span> in the mode energy over one pulsation cycle is given by the integral</p>
 <div class="math notranslate nohighlight">
 \[W = \int_{0}^{1} \frac{{\rm d}W}{{\rm d}x} \, {\rm d} x,\]</div>
-<p>where <span class="math notranslate nohighlight">\(x \equiv r/R\)</span> is the fractional radius. It can be shown
-that <span class="math notranslate nohighlight">\(W \propto \sigma_{\rm I}\)</span>; it therefore follows that if
-:math:<cite>W &gt; 0</cite> then the mode is unstable. Clearly, regions of the star
-where <span class="math notranslate nohighlight">\({\rm d}W/{\rm d}x &gt; 0\)</span> contribute toward driving the
-mode, while regions with <span class="math notranslate nohighlight">\({\rm d}W/{\rm d}x &lt; 0\)</span> contribute
-toward damping.</p>
+<p>where <span class="math notranslate nohighlight">\(x \equiv r/R\)</span> is the fractional radius.</p>
+<p>It can be shown that <span class="math notranslate nohighlight">\(W \propto \sigma_{\rm I}\)</span>; it therefore
+follows that if <span class="math notranslate nohighlight">\(W &gt; 0\)</span> then the mode is unstable. Clearly,
+regions of the star where <span class="math notranslate nohighlight">\({\rm d}W/{\rm d}x &gt; 0\)</span> contribute
+toward driving the mode, while regions with <span class="math notranslate nohighlight">\({\rm d}W/{\rm d}x &lt;
+0\)</span> contribute toward damping.</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p>Using a similar approach as we did for the displacement
@@ -333,8 +334,8 @@ axes, plot the log of the opacity.</p>
 <p>Repeat the ZAMS-to-TAMS run, and think about the following questions:</p>
 <ul class="simple">
 <li><p>Where in the star is the driving strongest?</p></li>
-<li><p>How does the driving region relate to the peak in the opacity data
-around <span class="math notranslate nohighlight">\(\log T \approx 5.2\)</span> (the ‘iron bump’)?</p></li>
+<li><p>How does this driving region relate to the peak in the opacity data
+around <span class="math notranslate nohighlight">\(\log T \approx 5.3\)</span> (the ‘iron bump’)?</p></li>
 <li><p>Where in the star does damping occur?</p></li>
 <li><p>What happens as the star evolves?</p></li>
 </ul>
