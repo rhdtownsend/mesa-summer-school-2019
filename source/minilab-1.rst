@@ -86,7 +86,7 @@ ensures that models have enough mesh points for GYRE to resolve
 pulsation wavefunctions [#f2]_.
 
 .. literalinclude:: townsend-2019-mini-1/inlist_to_tams_project
-   :start-after: Zbase
+   :start-after: use_dedt_form_of_energy_eqn
    :end-before: ! Overshooting
 
 Here, we configure various convection parameters. The
@@ -204,7 +204,8 @@ end of ``run_star_extras.f90``:
 
     ! Pass model data to GYRE
 
-    call star_get_pulse_data(id, 'GYRE', .FALSE., .TRUE., .FALSE., global_data, point_data, ierr)
+    call star_get_pulse_data(id, 'GYRE', .FALSE., .TRUE., .FALSE., &
+         global_data, point_data, ierr)
     if (ierr /= 0) then
        print *,'Failed when calling star_get_pulse_data'
        return
