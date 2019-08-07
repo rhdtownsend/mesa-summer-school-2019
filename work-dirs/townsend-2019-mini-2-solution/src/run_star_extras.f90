@@ -252,7 +252,8 @@ contains
 
     ! Pass model data to GYRE
 
-    call star_get_pulse_data(id, 'GYRE', .FALSE., .TRUE., .FALSE., global_data, point_data, ierr)
+    call star_get_pulse_data(id, 'GYRE', .FALSE., .TRUE., .FALSE., &
+         global_data, point_data, ierr)
     if (ierr /= 0) then
        print *,'Failed when calling star_get_pulse_data'
        return
