@@ -1,0 +1,78 @@
+! Project inlist file for GYRE in MESA / MiniLab 1
+!
+! (pre-main sequence to ZAMS)
+
+&star_job
+
+  ! Begin with a pre-main sequence model
+
+  create_pre_main_sequence_model = .true.
+
+  pre_ms_T_c = 1d5
+
+  ! Abundances
+
+  initial_zfracs = 6
+  kappa_file_prefix = 'a09'
+
+  ! Display on-screen plots
+
+  pgstar_flag = .true.
+
+  ! Save model at end
+
+  save_model_when_terminate = .true.
+  save_model_filename = 'zams.mod'
+
+/ !end of star_job namelist
+
+
+&controls
+
+  ! Mass & metalicity
+
+  initial_mass = 15.
+
+  initial_Y = 0.2703
+  initial_Z = 0.0142
+
+  ! Grid and timestep
+   
+  mesh_delta_coeff = 0.5
+
+  max_years_for_timestep = 1d5
+
+  ! Stopping condition
+
+  stop_near_zams = .true.
+
+  ! Gold tolerances
+
+  use_gold_tolerances = .true.
+  use_dedt_form_of_energy_eqn = .true.
+   
+  ! Convective mixing
+
+  mixing_length_alpha = 1.8d0
+  MLT_option = 'Henyey'
+
+  num_cells_for_smooth_gradL_composition_term = 25
+  threshold_for_smooth_gradL_composition_term = 0.02
+
+  num_cells_for_smooth_brunt_B = 25
+  threshold_for_smooth_brunt_B = 1E-4
+
+  use_ledoux_criterion = .true.
+
+  ! Overshooting
+
+  overshoot_new = .true.
+
+  overshoot_scheme(1) = 'exponential'
+  overshoot_zone_type(1) = 'any'
+  overshoot_zone_loc(1) = 'any'
+  overshoot_bdy_loc(1) = 'any'
+  overshoot_f(1) = 0.016
+  overshoot_f0(1) = 0.004
+
+/ ! end of controls namelist
