@@ -7,7 +7,7 @@ MiniLab 1: First Steps
 Overview
 ========
 
-In MiniLab 1, we'll create a model for a typical :math:`\beta` Cepheid
+In MiniLab 1, we'll create a model for a typical :math:`\beta` Cephei
 star and track it as it evolves from the zero-age main sequence
 (ZAMS) through to the terminal age main sequence (TAMS). Although MESA
 provides a pre-built set of ZAMS models, these have a metallicity
@@ -285,7 +285,7 @@ As the run proceeds, you should be able to see terminal output that looks simila
 This confirms that GYRE is being run, and that radial modes (in this
 case, the fundamental and first two overtones) are being found. The
 periods of the modes are of the order :math:`10^{4}\,{\rm s}`, just
-what we'd expect for :math:`\beta` Cepheid stars.
+what we'd expect for :math:`\beta` Cephei stars.
 
 .. rubric:: Footnotes
 
