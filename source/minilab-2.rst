@@ -27,7 +27,7 @@ Adding Periods to History Output
 
 The standard approach to adding extra columns to history output is to
 modify the ``how_many_extra_history_columns`` and
-``data_for_extra_history_columns hooks``. The former defines how many
+``data_for_extra_history_columns`` hooks. The former defines how many
 extra columns we want to add; while the latter specifies the data to
 put into the columns, together with their associated names. Before we
 make these modifications, however, we have solve a logistical problem:
