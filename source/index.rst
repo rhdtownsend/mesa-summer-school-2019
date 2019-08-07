@@ -14,4 +14,5 @@ GYRE in MESA Lab
    minilab-1
    minilab-2
    minilab-3
+   maxilab
    
