@@ -49,6 +49,8 @@ top of ``run_star_extras.f90``:
     real(dp), save :: period_f
     real(dp), save :: period_1o
 
+    ! Displacement wavefunctions of F and 1-O modes
+
     real(dp), allocatable, save :: xi_r_f(:)
     real(dp), allocatable, save :: xi_r_1o(:)
 
@@ -68,22 +70,22 @@ illustrates how to set up the ``xi_r_f`` variable for the fundamental
 mode:
 
 .. code-block:: fortran
-     :emphasize-lines: 1,13-
+      :emphasize-lines: 1,14-
 
-     integer :: k
+      integer :: k
 
-     ! Print out radial order and eigenfrequency
+      ! Print out radial order and frequency
 
-     print *, 'Found mode: radial order, frequency = ', md%n_pg, REAL(md%freq('HZ'))
+      print *, 'Found mode: radial order, frequency = ', &
+           md%n_pg, REAL(md%freq('HZ'))
 
-      ! If this is the fundamental mode, store the period
+      ! If this is the F mode, store the period
 
       if (md%n_pg == 1) then
          period_f = 1. / (3600.*REAL(md%freq('HZ')))
       end if
 
-      ! If this is the fundamental mode, store the radial displacement
-      ! wavefunction
+      ! If this is the F mode, store the displacement wavefunction
 
       if (md%n_pg == 1) then
 
@@ -96,7 +98,8 @@ mode:
 
 	 xi_r_f = xi_r_f(md%n_k:1:-1)
 
-      endif
+      end if
+
 
 (Don't overlook the first, highlighted line, where we declare a new
 integer variable ``k``).
@@ -110,13 +113,13 @@ the order of elements in this array.
 .. admonition:: Exercise
       
    Add further code to ``process_mode``, to store the radial
-   displacement wavefunction of the first overtone into ``xi_r_1o``.
+   displacement wavefunction of the 1-O mode into ``xi_r_1o``.
    
 Adding Profile Columns
 ----------------------
 
-Next, we'll add two extra columns to history output, in
-which we'll store the radial displacement wavefunctions we've calculated.
+Next, we'll add two extra columns to profile output, in which we'll
+store the radial displacement wavefunctions we've calculated.
 
 .. admonition:: Exercise
 
@@ -135,7 +138,6 @@ like this:
 .. code-block:: fortran
 
    vals(:,1) = xi_r_f
-
 
 Running the Code
 ================

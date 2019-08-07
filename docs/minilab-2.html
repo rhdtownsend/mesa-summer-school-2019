@@ -99,6 +99,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="minilab-3.html">MiniLab 3: Plotting Wavefunctions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maxilab.html">MaxiLab: Exploring the Instability Strip</a></li>
 </ul>
 
             
@@ -183,7 +184,7 @@ directory from MiniLab 1 (with all the changes you have made):</p>
 <h2>Adding Periods to History Output<a class="headerlink" href="#adding-periods-to-history-output" title="Permalink to this headline">¶</a></h2>
 <p>The standard approach to adding extra columns to history output is to
 modify the <code class="docutils literal notranslate"><span class="pre">how_many_extra_history_columns</span></code> and
-<code class="docutils literal notranslate"><span class="pre">data_for_extra_history_columns</span> <span class="pre">hooks</span></code>. The former defines how many
+<code class="docutils literal notranslate"><span class="pre">data_for_extra_history_columns</span></code> hooks. The former defines how many
 extra columns we want to add; while the latter specifies the data to
 put into the columns, together with their associated names. Before we
 make these modifications, however, we have solve a logistical problem:
@@ -195,11 +196,12 @@ within <code class="docutils literal notranslate"><span class="pre">run_star_ext
 <div class="section" id="adding-module-variables">
 <h3>Adding Module Variables<a class="headerlink" href="#adding-module-variables" title="Permalink to this headline">¶</a></h3>
 <p>Let’s add a couple of module variables to store the periods of the
-fundamental and first-overtone modes. Add the following highlighted
-code at the appropriate place near the top of <code class="docutils literal notranslate"><span class="pre">run_star_extras.f90</span></code>:</p>
+fundamental (F) and first-overtone (1-O) modes. Add the following
+highlighted code at the appropriate place near the top of
+<code class="docutils literal notranslate"><span class="pre">run_star_extras.f90</span></code>:</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! &gt;&gt;&gt; Insert module variables below</span>
 
-<span class="hll"><span class="c">! Periods of fundamental and first overtone</span>
+<span class="hll"><span class="c">! Periods of F and 1-O modes</span>
 </span><span class="hll">
 </span><span class="hll"><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">save</span> <span class="kd">::</span> <span class="n">period_f</span>
 </span><span class="hll"><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">save</span> <span class="kd">::</span> <span class="n">period_1o</span>
@@ -219,26 +221,28 @@ overtone, update one or the other module variable accordingly.</p>
 stored in the <code class="docutils literal notranslate"><span class="pre">md</span></code> object. The existing code that prints radial
 orders and frequencies to the screen already shows us how to access
 these data:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! Print out radial order and eigenfrequency</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! Print out radial order and frequency</span>
 
-<span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Found mode: radial order, frequency = &#39;</span><span class="p">,</span> <span class="n">md</span><span class="p">%</span><span class="n">n_pg</span><span class="p">,</span> <span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">))</span>
+<span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Found mode: radial order, frequency = &#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">md</span><span class="p">%</span><span class="n">n_pg</span><span class="p">,</span> <span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Here, <code class="docutils literal notranslate"><span class="pre">md%n_pg</span></code> is a simple integer variable containing the radial
 order; while <code class="docutils literal notranslate"><span class="pre">md%freq(...)</span></code> is a function that returns the mode
-frequency in the desired units (in this case, Hertz). The <code class="docutils literal notranslate"><span class="pre">REAL(...)</span></code>
-wrapper is required because <code class="docutils literal notranslate"><span class="pre">md%freq(...)</span></code> returns a complex value,
-with the real part containing the frequency and the imaginary part
-containing the growth rate (more of that later, when we consider
-non-adiabatic pulsations).</p>
+frequency in the desired units (in this case, Hertz). The
+<code class="docutils literal notranslate"><span class="pre">REAL(...)</span></code> wrapper is required because <code class="docutils literal notranslate"><span class="pre">md%freq(...)</span></code> returns a
+complex value, with the real part containing the frequency and the
+imaginary part containing the growth rate (more of that later in the
+<a class="reference internal" href="maxilab.html#maxilab"><span class="std std-ref">MaxiLab</span></a>, when we consider non-adiabatic pulsations).</p>
 <p>With these points in mind, we can set <code class="docutils literal notranslate"><span class="pre">period_f</span></code> to the
-fundamental-mode period <em>in hours</em> by adding the following highlighted
+F-mode period <em>in hours</em> by adding the following highlighted
 code to the <code class="docutils literal notranslate"><span class="pre">process_mode</span></code> subroutine:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! Print out radial order and eigenfrequency</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span> <span class="c">! Print out radial order and frequency</span>
 
-<span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Found mode: radial order, frequency = &#39;</span><span class="p">,</span> <span class="n">md</span><span class="p">%</span><span class="n">n_pg</span><span class="p">,</span> <span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">))</span>
+ <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Found mode: radial order, frequency = &#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+      <span class="n">md</span><span class="p">%</span><span class="n">n_pg</span><span class="p">,</span> <span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">))</span>
 
-<span class="hll"> <span class="c">! If this is the fundamental mode, store the period</span>
+<span class="hll"> <span class="c">! If this is the F mode, store the period</span>
 </span><span class="hll">
 </span><span class="hll"> <span class="k">if</span> <span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">n_pg</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">then</span>
 </span><span class="hll"><span class="k">    </span><span class="n">period_f</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mi">360</span><span class="mf">0.</span><span class="o">*</span><span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">)))</span>
@@ -248,7 +252,7 @@ code to the <code class="docutils literal notranslate"><span class="pre">process
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p>Add further code to <code class="docutils literal notranslate"><span class="pre">process_mode</span></code>, to store the period
-of the first overtone into <code class="docutils literal notranslate"><span class="pre">period_1o</span></code>.</p>
+of the 1-O mode into <code class="docutils literal notranslate"><span class="pre">period_1o</span></code>.</p>
 </div>
 </div>
 <div class="section" id="adding-history-columns">
@@ -309,33 +313,35 @@ flag:</p>
 run, showing how the mode periods change as the star evolves. The type
 of window we’ll use is called a ‘history panel’, which plots columns
 from the history file as a function of model number or time.</p>
-<p>Open up <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code>, and add the following code at the
-bottom:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! Show pulsation periods</span>
-
-<span class="n">History_Panels1_win_flag</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
-
-<span class="n">History_Panels1_num_panels</span> <span class="o">=</span> <span class="mi">2</span>
-
-<span class="n">History_Panels1_xaxis_name</span> <span class="o">=</span> <span class="s1">&#39;star_age&#39;</span>
-<span class="n">History_Panels1_max_width</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="n">History_Panels1_yaxis_name</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;period_f&#39;</span>
-<span class="n">History_Panels1_ymin</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">History_Panels1_other_yaxis_name</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-
-<span class="n">History_Panels1_yaxis_name</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;period_1o&#39;</span>
-<span class="n">History_Panels1_ymin</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">History_Panels1_other_yaxis_name</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</pre></div>
+<p>Open up <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code>, and add the following highlighted
+code at the bottom:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="c">! Show pulsation periods</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">History_Panels1_win_flag</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">History_Panels1_num_panels</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">History_Panels1_xaxis_name</span> <span class="o">=</span> <span class="s1">&#39;star_age&#39;</span>
+</span><span class="hll"><span class="n">History_Panels1_max_width</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">History_Panels1_yaxis_name</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;period_f&#39;</span>
+</span><span class="hll"><span class="n">History_Panels1_ymin</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="hll"><span class="n">History_Panels1_other_yaxis_name</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class="hll"><span class="n">History_Panels1_other_ymin</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">History_Panels1_yaxis_name</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;period_1o&#39;</span>
+</span><span class="hll"><span class="n">History_Panels1_ymin</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="hll"><span class="n">History_Panels1_other_yaxis_name</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class="hll"><span class="n">History_Panels1_other_ymin</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+</span></pre></div>
 </div>
 <p>Now re-run the ZAMS-to-TAMS evolution, and consider the following questions:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>Why do the mode periods get longer for the most of the run — but
 then briefly get shorter at the end of the run?</p></li>
-<li><p>Why do the mode periods move in lockstep, with the first overtone
-period being an almost-fixed multiple of the fundamental period?</p></li>
+<li><p>Why do the mode periods move in lockstep, with the 1-O mode being
+an almost-fixed multiple of the F mode?</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -344,7 +350,8 @@ period being an almost-fixed multiple of the fundamental period?</p></li>
 <p>The answer to both of the questions above lies in considering the
 response of a star to departures from hydrostatic equilibrium. One of
 the first things we learn in any course on stellar astrophysics is
-that this response occurs on the star’s dynamical timescale: <span class="math notranslate nohighlight">\(\tau_{\rm dyn} = \sqrt{R^{3}/GM}\)</span>. Since radial oscillations
+that this response occurs on the star’s dynamical timescale:
+<span class="math notranslate nohighlight">\(\tau_{\rm dyn} = \sqrt{R^{3}/GM}\)</span>. Since radial oscillations
 are an example of departures from hydrostatic equilibrium, we should
 therefore expect the oscillation periods <span class="math notranslate nohighlight">\(P\)</span> to scale
 (approximately) proportionally with <span class="math notranslate nohighlight">\(\tau_{\rm dyn}\)</span>. Our next

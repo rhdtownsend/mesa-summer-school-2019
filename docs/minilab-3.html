@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="_static/style.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MaxiLab: Exploring the Instability Strip" href="maxilab.html" />
     <link rel="prev" title="MiniLab 2: Plotting Periods" href="minilab-2.html" /> 
 </head>
 
@@ -98,6 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#plotting-the-wavefunctions">Plotting the Wavefunctions</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="maxilab.html">MaxiLab: Exploring the Instability Strip</a></li>
 </ul>
 
             
@@ -198,7 +200,9 @@ top of <code class="docutils literal notranslate"><span class="pre">run_star_ext
 <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">save</span> <span class="kd">::</span> <span class="n">period_f</span>
 <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">save</span> <span class="kd">::</span> <span class="n">period_1o</span>
 
-<span class="hll"><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">save</span> <span class="kd">::</span> <span class="n">xi_r_f</span><span class="p">(:)</span>
+<span class="hll"><span class="c">! Displacement wavefunctions of F and 1-O modes</span>
+</span><span class="hll">
+</span><span class="hll"><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">save</span> <span class="kd">::</span> <span class="n">xi_r_f</span><span class="p">(:)</span>
 </span><span class="hll"><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">save</span> <span class="kd">::</span> <span class="n">xi_r_1o</span><span class="p">(:)</span>
 </span></pre></div>
 </div>
@@ -217,31 +221,31 @@ illustrates how to set up the <code class="docutils literal notranslate"><span c
 mode:</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="kt">integer</span> <span class="kd">::</span> <span class="n">k</span>
 </span>
-<span class="c">! Print out radial order and eigenfrequency</span>
+<span class="c">! Print out radial order and frequency</span>
 
-<span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Found mode: radial order, frequency = &#39;</span><span class="p">,</span> <span class="n">md</span><span class="p">%</span><span class="n">n_pg</span><span class="p">,</span> <span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">))</span>
+<span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Found mode: radial order, frequency = &#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">md</span><span class="p">%</span><span class="n">n_pg</span><span class="p">,</span> <span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">))</span>
 
- <span class="c">! If this is the fundamental mode, store the period</span>
+<span class="c">! If this is the F mode, store the period</span>
 
- <span class="k">if</span> <span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">n_pg</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">    </span><span class="n">period_f</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mi">360</span><span class="mf">0.</span><span class="o">*</span><span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">)))</span>
- <span class="k">end if</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">n_pg</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">   </span><span class="n">period_f</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mi">360</span><span class="mf">0.</span><span class="o">*</span><span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">)))</span>
+<span class="k">end if</span>
 
-<span class="hll"> <span class="c">! If this is the fundamental mode, store the radial displacement</span>
-</span><span class="hll"> <span class="c">! wavefunction</span>
+<span class="hll"><span class="c">! If this is the F mode, store the displacement wavefunction</span>
 </span><span class="hll">
-</span><span class="hll"> <span class="k">if</span> <span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">n_pg</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">then</span>
+</span><span class="hll"><span class="k">if</span> <span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">n_pg</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">then</span>
 </span><span class="hll">
-</span><span class="hll"><span class="k">    if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">xi_r_f</span><span class="p">))</span> <span class="k">deallocate</span><span class="p">(</span><span class="n">xi_r_f</span><span class="p">)</span>
-</span><span class="hll">    <span class="k">allocate</span><span class="p">(</span><span class="n">xi_r_f</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">n_k</span><span class="p">))</span>
+</span><span class="hll"><span class="k">   if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">xi_r_f</span><span class="p">))</span> <span class="k">deallocate</span><span class="p">(</span><span class="n">xi_r_f</span><span class="p">)</span>
+</span><span class="hll">   <span class="k">allocate</span><span class="p">(</span><span class="n">xi_r_f</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">n_k</span><span class="p">))</span>
 </span><span class="hll">
-</span><span class="hll">    <span class="k">do </span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">md</span><span class="p">%</span><span class="n">n_k</span>
-</span><span class="hll">       <span class="n">xi_r_f</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">md</span><span class="p">%</span><span class="n">xi_r</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-</span><span class="hll">    <span class="k">end do</span>
+</span><span class="hll">   <span class="k">do </span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">md</span><span class="p">%</span><span class="n">n_k</span>
+</span><span class="hll">      <span class="n">xi_r_f</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">md</span><span class="p">%</span><span class="n">xi_r</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</span><span class="hll">   <span class="k">end do</span>
 </span><span class="hll">
-</span><span class="hll"><span class="k">    </span><span class="n">xi_r_f</span> <span class="o">=</span> <span class="n">xi_r_f</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">n_k</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="hll"><span class="k">   </span><span class="n">xi_r_f</span> <span class="o">=</span> <span class="n">xi_r_f</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">n_k</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </span><span class="hll">
-</span><span class="hll"> <span class="n">endif</span>
+</span><span class="hll"><span class="k">end if</span>
 </span></pre></div>
 </div>
 <p>(Don’t overlook the first, highlighted line, where we declare a new
@@ -254,13 +258,13 @@ the order of elements in this array.</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p>Add further code to <code class="docutils literal notranslate"><span class="pre">process_mode</span></code>, to store the radial
-displacement wavefunction of the first overtone into <code class="docutils literal notranslate"><span class="pre">xi_r_1o</span></code>.</p>
+displacement wavefunction of the 1-O mode into <code class="docutils literal notranslate"><span class="pre">xi_r_1o</span></code>.</p>
 </div>
 </div>
 <div class="section" id="adding-profile-columns">
 <h3>Adding Profile Columns<a class="headerlink" href="#adding-profile-columns" title="Permalink to this headline">¶</a></h3>
-<p>Next, we’ll add two extra columns to history output, in
-which we’ll store the radial displacement wavefunctions we’ve calculated.</p>
+<p>Next, we’ll add two extra columns to profile output, in which we’ll
+store the radial displacement wavefunctions we’ve calculated.</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p>Modify <code class="docutils literal notranslate"><span class="pre">how_many_extra_profile_columns</span></code> to set the number of
@@ -356,6 +360,8 @@ period shorter.</p>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="maxilab.html" class="btn btn-neutral float-right" title="MaxiLab: Exploring the Instability Strip" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="minilab-2.html" class="btn btn-neutral float-left" title="MiniLab 2: Plotting Periods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -36,7 +36,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/style.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="MiniLab 3: Plotting Wavefunctions" href="minilab-3.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -81,10 +82,21 @@
             
             
               <p class="caption"><span class="caption-text">Contents</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="minilab-1.html">MiniLab 1: First Steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="minilab-2.html">MiniLab 2: Plotting Periods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="minilab-3.html">MiniLab 3: Plotting Wavefunctions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MaxiLab: Exploring the Instability Strip</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enabling-non-adiabatic-effects">Enabling Non-Adiabatic Effects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#printing-growth-decay-rates">Printing Growth/Decay Rates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-growth-rates-to-history-output">Adding Growth Rates to History Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plotting-the-growth-rates">Plotting the Growth Rates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exploring-the-driving">Exploring the Driving</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -153,7 +165,119 @@
 <span id="maxilab"></span><h1>MaxiLab: Exploring the Instability Strip<a class="headerlink" href="#maxilab-exploring-the-instability-strip" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>In the MiniLabs, we’ve been running GYRE in</p>
+<p>In the MiniLabs, we’ve been running GYRE within the adiabatic
+approximation, where thermal exchanges between neighboring oscillating
+elements is neglected. For main sequence stars, these exchanges
+typically have only a small effect on the periods/frequencies of
+oscillation modes; and so, if we’re interested mainly in interpreting
+these periods, the approximation is usually a good one.</p>
+<p>In the MaxiLab, we’re going to move beyond the adiabatic
+approximation. This will allow us to explore which modes are unstable
+in our model star, and by what mechanism. Then, by extending these
+non-adiabatic calculations to stars with other masses, we will map out
+the :math:<cite>beta Cepheid</cite> instability strip.</p>
+<p>As the very first step, make a copy of your
+working directory from MiniLab 3 (with all the changes you have made):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cp -a townsend-2019-mini-2 townsend-2019-maxi
+<span class="gp">$</span> <span class="nb">cd</span> townsend-2019-maxi
+</pre></div>
+</div>
+<p>Alternatively, if you were unable to get things working with MiniLab
+3, then you can grab a working directory for the MaxiLab from <a class="reference external" href="http://www.astro.wisc.edu/~townsend/resource/teaching/summer-school-2019/townsend-2019-maxi.tar.gz">here</a>.</p>
+</div>
+<div class="section" id="enabling-non-adiabatic-effects">
+<h2>Enabling Non-Adiabatic Effects<a class="headerlink" href="#enabling-non-adiabatic-effects" title="Permalink to this headline">¶</a></h2>
+<p>Enabling non-adiabatic effects in GYRE is straightforward: simply add
+the following highlighted code to <code class="docutils literal notranslate"><span class="pre">gyre.in</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="p">&amp;</span><span class="n">osc</span>
+     <span class="n">inner_bound</span> <span class="o">=</span> <span class="s1">&#39;ZERO_R&#39;</span>
+<span class="hll">     <span class="n">nonadiabatic</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>If you repeat the ZAMS-to-TAMS evolution with this modification,
+things will appear largely unchanged from MiniLab 3; that’s because,
+as mentioned above, the mode periods are scarecely affected by thermal
+exchanges. However, a big difference from previous runs is that the
+mode frequencies calculated by GYRE are now complex quantities.</p>
+<div class="section" id="printing-growth-decay-rates">
+<h3>Printing Growth/Decay Rates<a class="headerlink" href="#printing-growth-decay-rates" title="Permalink to this headline">¶</a></h3>
+<p>GYRE assumes that the perturbation <span class="math notranslate nohighlight">\(f'(t)\)</span> to some quantity
+<span class="math notranslate nohighlight">\(f\)</span>, caused by an oscillation mode with angular frequency
+<span class="math notranslate nohighlight">\(\sigma\)</span>, takes the form</p>
+<div class="math notranslate nohighlight">
+\[f'(t) \propto \exp( -{\rm i} \sigma t ).\]</div>
+<p>If we decompose <span class="math notranslate nohighlight">\(\sigma\)</span> into real (<span class="math notranslate nohighlight">\(\sigma_{\rm R}\)</span>) and
+imaginary (<span class="math notranslate nohighlight">\(\sigma_{\rm I}\)</span>) parts, this becomes</p>
+<div class="math notranslate nohighlight">
+\[f'(t) \propto \exp (- {\rm i} \sigma_{\rm R} t) \, \exp ( \sigma_{\rm I} t).\]</div>
+<p>Hence, over time <span class="math notranslate nohighlight">\(f'\)</span> oscillates with period <span class="math notranslate nohighlight">\(P =
+2\pi/\sigma_{\rm R}\)</span>, but also experiences exponential growth with a
+rate given by <span class="math notranslate nohighlight">\(\sigma_{\rm I}\)</span>. If <span class="math notranslate nohighlight">\(\sigma_{\rm I}\)</span> is
+negative, then decay rather than growth occurs. Hence, the sign of
+<span class="math notranslate nohighlight">\(\sigma_{\rm I}\)</span> indicates whether the mode is unstable
+(growing) or stable (decaying).</p>
+<p>To see whether the modes in the ZAMS-to-TAMS run are stable or
+unstable, modify the <code class="docutils literal notranslate"><span class="pre">print</span></code> statement in the <code class="docutils literal notranslate"><span class="pre">run_gyre</span></code> subroutine of
+<code class="docutils literal notranslate"><span class="pre">run_star_extras.f90</span></code> to display growth rates:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! Print out radial order, frequency and growth rate</span>
+
+<span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Found mode: radial order, frequency, growth = &#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+         <span class="n">md</span><span class="p">%</span><span class="n">n_pg</span><span class="p">,</span> <span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">)),</span> <span class="mf">2.</span><span class="o">*</span><span class="n">PI</span><span class="o">*</span><span class="nb">AIMAG</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>(The extra factor of <code class="docutils literal notranslate"><span class="pre">2.*PI</span></code> appears because the
+<code class="docutils literal notranslate"><span class="pre">md%freq('HZ')</span></code> function returns the linear frequency, rather
+than the angular frequency).</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>With the above modification, repeat the ZAMS-to-TAMS run. Where in
+the run do the fundamental and first-overtone radial modes
+transition from stable to unstable?</p>
+</div>
+</div>
+<div class="section" id="adding-growth-rates-to-history-output">
+<h3>Adding Growth Rates to History Output<a class="headerlink" href="#adding-growth-rates-to-history-output" title="Permalink to this headline">¶</a></h3>
+<p>As the next step, we’ll add two extra columns to history output, to
+store the growth rates for the fundamental and first-overtone
+modes.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Using a similar approach as we did for the mode periods in
+<a class="reference internal" href="minilab-2.html#minilab-2"><span class="std std-ref">MiniLab 2</span></a>, modify <code class="docutils literal notranslate"><span class="pre">run_star_extras.f90</span></code> to add
+the extra history columns. This will involve creating two new
+module variables to store the growth rates (call them
+<code class="docutils literal notranslate"><span class="pre">growth_f</span></code> and <code class="docutils literal notranslate"><span class="pre">growth_1o</span></code>); changing the <code class="docutils literal notranslate"><span class="pre">run_gyre</span></code>
+subroutine to store data into these columns; and changing the
+<code class="docutils literal notranslate"><span class="pre">how_many_extra_history_columns</span></code> and
+<code class="docutils literal notranslate"><span class="pre">data_for_extra_history_columns</span></code> hooks.</p>
+</div>
+<p>Once you’ve made these changes, do a ZAMS-to-TAMS run and confirm that
+the columns appear correctly in the history file.</p>
+</div>
+<div class="section" id="plotting-the-growth-rates">
+<h3>Plotting the Growth Rates<a class="headerlink" href="#plotting-the-growth-rates" title="Permalink to this headline">¶</a></h3>
+<p>Let’s now update the PGstar plots to show the growth rates.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Edit <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code>, changing the history panel so that
+it shows the growth rates instead of the dynamical timescale. Be
+sure to remove (or comment out) the
+<code class="docutils literal notranslate"><span class="pre">History_Panels1_other_ymin(1)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">History_Panels1_other_ymin(2)</span></code>, to ensure the plots show
+positive <em>and</em> negative growth rates.</p>
+</div>
+</div>
+</div>
+<div class="section" id="exploring-the-driving">
+<h2>Exploring the Driving<a class="headerlink" href="#exploring-the-driving" title="Permalink to this headline">¶</a></h2>
+<p>The preceding steps establish that the fundamental and first-overtone
+radial modes become unstable when the star reaches an age
+<span class="math notranslate nohighlight">\(\approx 7\,{\rm Myr}\)</span>, about halfway through its main-sequence
+evolution. Because our model is representative of a <span class="math notranslate nohighlight">\(\beta\)</span>
+Cepheid star, we expect the <span class="math notranslate nohighlight">\(kappa\)</span> mechanism operating on the
+iron opacity bump is responsible for the modes’ instability. We’re
+going to confirm that this is the case.</p>
 </div>
 </div>
 
@@ -162,6 +286,13 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="minilab-3.html" class="btn btn-neutral float-left" title="MiniLab 3: Plotting Wavefunctions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

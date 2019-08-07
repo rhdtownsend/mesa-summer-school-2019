@@ -27,7 +27,7 @@ Adding Periods to History Output
 
 The standard approach to adding extra columns to history output is to
 modify the ``how_many_extra_history_columns`` and
-``data_for_extra_history_columns hooks``. The former defines how many
+``data_for_extra_history_columns`` hooks. The former defines how many
 extra columns we want to add; while the latter specifies the data to
 put into the columns, together with their associated names. Before we
 make these modifications, however, we have solve a logistical problem:
@@ -42,15 +42,16 @@ Adding Module Variables
 -----------------------
 
 Let's add a couple of module variables to store the periods of the
-fundamental and first-overtone modes. Add the following highlighted
-code at the appropriate place near the top of ``run_star_extras.f90``:
+fundamental (F) and first-overtone (1-O) modes. Add the following
+highlighted code at the appropriate place near the top of
+``run_star_extras.f90``:
 
 .. code-block:: fortran
     :emphasize-lines: 3-
 
     ! >>> Insert module variables below
 
-    ! Periods of fundamental and first overtone
+    ! Periods of F and 1-O modes
 
     real(dp), save :: period_f
     real(dp), save :: period_1o
@@ -76,30 +77,32 @@ these data:
 
 .. code-block:: fortran
 
-      ! Print out radial order and eigenfrequency
+      ! Print out radial order and frequency
 
-      print *, 'Found mode: radial order, frequency = ', md%n_pg, REAL(md%freq('HZ'))
+      print *, 'Found mode: radial order, frequency = ', &
+           md%n_pg, REAL(md%freq('HZ'))
 
 Here, ``md%n_pg`` is a simple integer variable containing the radial
 order; while ``md%freq(...)`` is a function that returns the mode
-frequency in the desired units (in this case, Hertz). The ``REAL(...)``
-wrapper is required because ``md%freq(...)`` returns a complex value,
-with the real part containing the frequency and the imaginary part
-containing the growth rate (more of that later, when we consider
-non-adiabatic pulsations).
+frequency in the desired units (in this case, Hertz). The
+``REAL(...)`` wrapper is required because ``md%freq(...)`` returns a
+complex value, with the real part containing the frequency and the
+imaginary part containing the growth rate (more of that later in the
+:ref:`MaxiLab <maxilab>`, when we consider non-adiabatic pulsations).
 
 With these points in mind, we can set ``period_f`` to the
-fundamental-mode period *in hours* by adding the following highlighted
+F-mode period *in hours* by adding the following highlighted
 code to the ``process_mode`` subroutine:
 
 .. code-block:: fortran
-     :emphasize-lines: 5-
+     :emphasize-lines: 6-
 
-     ! Print out radial order and eigenfrequency
+      ! Print out radial order and frequency
 
-     print *, 'Found mode: radial order, frequency = ', md%n_pg, REAL(md%freq('HZ'))
+      print *, 'Found mode: radial order, frequency = ', &
+           md%n_pg, REAL(md%freq('HZ'))
 
-      ! If this is the fundamental mode, store the period
+      ! If this is the F mode, store the period
 
       if (md%n_pg == 1) then
          period_f = 1. / (3600.*REAL(md%freq('HZ')))
@@ -108,7 +111,7 @@ code to the ``process_mode`` subroutine:
 .. admonition:: Exercise
       
    Add further code to ``process_mode``, to store the period
-   of the first overtone into ``period_1o``.
+   of the 1-O mode into ``period_1o``.
 
 .. _minilab-2-add-hist-cols:
    
@@ -182,10 +185,11 @@ run, showing how the mode periods change as the star evolves. The type
 of window we'll use is called a 'history panel', which plots columns
 from the history file as a function of model number or time.
 
-Open up ``inlist_to_tams_pgstar``, and add the following code at the
-bottom:
+Open up ``inlist_to_tams_pgstar``, and add the following highlighted
+code at the bottom:
 
 .. code-block:: fortran
+  :emphasize-lines: 1-
 
   ! Show pulsation periods
 
@@ -199,18 +203,20 @@ bottom:
   History_Panels1_yaxis_name(1) = 'period_f'
   History_Panels1_ymin(1) = 0
   History_Panels1_other_yaxis_name(1) = ''
+  History_Panels1_other_ymin(1) = 0
 
   History_Panels1_yaxis_name(2) = 'period_1o'
   History_Panels1_ymin(2) = 0
   History_Panels1_other_yaxis_name(2) = ''
+  History_Panels1_other_ymin(2) = 0
 
 Now re-run the ZAMS-to-TAMS evolution, and consider the following questions:
 
   - Why do the mode periods get longer for the most of the run --- but
     then briefly get shorter at the end of the run?
 
-  - Why do the mode periods move in lockstep, with the first overtone
-    period being an almost-fixed multiple of the fundamental period?
+  - Why do the mode periods move in lockstep, with the 1-O mode being
+    an almost-fixed multiple of the F mode?
 
 Quantifying the Period Scaling
 ==============================
@@ -218,7 +224,8 @@ Quantifying the Period Scaling
 The answer to both of the questions above lies in considering the
 response of a star to departures from hydrostatic equilibrium. One of
 the first things we learn in any course on stellar astrophysics is
-that this response occurs on the star's dynamical timescale: :math:`\tau_{\rm dyn} = \sqrt{R^{3}/GM}`. Since radial oscillations
+that this response occurs on the star's dynamical timescale:
+:math:`\tau_{\rm dyn} = \sqrt{R^{3}/GM}`. Since radial oscillations
 are an example of departures from hydrostatic equilibrium, we should
 therefore expect the oscillation periods :math:`P` to scale
 (approximately) proportionally with :math:`\tau_{\rm dyn}`. Our next
