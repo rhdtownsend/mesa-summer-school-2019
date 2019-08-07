@@ -75,7 +75,7 @@ contains
     call gyre_set_constant('G_GRAVITY', standard_cgrav)
     call gyre_set_constant('C_LIGHT', clight)
     call gyre_set_constant('A_RADIATION', crad)
-    
+
     call gyre_set_constant('M_SUN', msol)
     call gyre_set_constant('R_SUN', rsol)
     call gyre_set_constant('L_SUN', lsol)
@@ -127,7 +127,7 @@ contains
        call run_gyre(id, ierr)
     endif
 
-! Set return value
+    ! Set return value
 
     extras_check_model = keep_going
 
@@ -254,9 +254,10 @@ contains
       real(dp), intent(inout)  :: rpar(:)
       integer, intent(out)     :: retcode
 
-      ! Print out radial order and eigenfrequency
+      ! Print out radial order and frequency
 
-      print *, 'Found mode: radial order, frequency = ', md%n_pg, REAL(md%freq('HZ'))
+      print *, 'Found mode: radial order, frequency = ', &
+           md%n_pg, REAL(md%freq('HZ'))
 
       ! Set return code
 
