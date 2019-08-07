@@ -7,9 +7,9 @@ MiniLab 1: First Steps
 Overview
 ========
 
-In MiniLab 1, we'll create a model for a :math:`15\,{\rm M_{\odot}}`
-star and track it as it evolves from the zero-age main sequence (ZAMS)
-through to the terminal age main sequence (TAMS). Although MESA
+In MiniLab 1, we'll create a model for a typical :math:`\beta` Cepheid
+star and track it as it evolves from the zero-age main sequence
+(ZAMS) through to the terminal age main sequence (TAMS). Although MESA
 provides a pre-built set of ZAMS models, these have a metallicity
 :math:`Z=0.02`; since we'll want to explore the effects of changing
 the metallicity, we'll also be creating our own custom ZAMS model.
@@ -68,9 +68,10 @@ important parts of the ZAMS-to-TAMS run. Here are a few excerpts:
    :start-after: &controls
    :end-before: ! Grid
 
-Here (above), we set up the initial mass, and choose helium and metal
-mass fractions corresponding to the :ads:`Asplund et al. (2009)
-<2009ARA%26A..47..481A>` proto-solar abundances.
+Here (above), we set the initial mass to :math:`15\,{\rm M_{\odot}}`,
+and choose helium and metal mass fractions corresponding to the
+:ads:`Asplund et al. (2009) <2009ARA%26A..47..481A>` proto-solar
+abundances.
 
 .. literalinclude:: townsend-2019-mini-1/inlist_to_tams_project
    :start-after: initial_Z
@@ -224,9 +225,10 @@ end of ``run_star_extras.f90``:
       real(dp), intent(inout)  :: rpar(:)
       integer, intent(out)     :: retcode
 
-      ! Print out radial order and eigenfrequency
+      ! Print out radial order and frequency
 
-      print *, 'Found mode: radial order, frequency = ', md%n_pg, REAL(md%freq('HZ'))
+      print *, 'Found mode: radial order, frequency = ', &
+               md%n_pg, REAL(md%freq('HZ'))
 
       ! Set return code
 

@@ -19,7 +19,7 @@ module run_star_extras
 
   ! >>> Insert module variables below
 
-  ! Frequencies of fundamental and first overtone
+  ! Periods of F and 1-O modes
 
   real(dp), save :: period_f
   real(dp), save :: period_1o
@@ -80,7 +80,7 @@ contains
     call gyre_set_constant('G_GRAVITY', standard_cgrav)
     call gyre_set_constant('C_LIGHT', clight)
     call gyre_set_constant('A_RADIATION', crad)
-    
+
     call gyre_set_constant('M_SUN', msol)
     call gyre_set_constant('R_SUN', rsol)
     call gyre_set_constant('L_SUN', lsol)
@@ -228,7 +228,6 @@ contains
     integer, intent(out) :: ierr
 
     type (star_info), pointer :: s
-    integer :: k
 
     ierr = 0
 
@@ -274,20 +273,21 @@ contains
       real(dp), intent(inout)  :: rpar(:)
       integer, intent(out)     :: retcode
 
-      ! Print out radial order and eigenfrequency
+      ! Print out radial order and frequency
 
-      print *, 'Found mode: radial order, frequency = ', md%n_pg, REAL(md%freq('HZ'))
+      print *, 'Found mode: radial order, frequency = ', &
+           md%n_pg, REAL(md%freq('HZ'))
 
-      ! If this is the fundamental mode, store the period
+      ! If this is the F mode, store the period
 
       if (md%n_pg == 1) then
-         period_f = 1./REAL(md%freq('HZ'))
+         period_f = 1. / (3600.*REAL(md%freq('HZ')))
       end if
 
-      ! If this is the first overtone mode, store the period
-      
+      ! If this is the 1-O mode, store the period
+
       if (md%n_pg == 2) then
-         period_1o = 1./REAL(md%freq('HZ'))
+         period_1o = 1. / (3600.*REAL(md%freq('HZ')))
       end if
 
       ! Set return code

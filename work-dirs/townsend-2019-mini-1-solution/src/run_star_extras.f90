@@ -208,7 +208,6 @@ contains
     integer, intent(out) :: ierr
 
     type (star_info), pointer :: s
-    integer :: k
 
     ierr = 0
 

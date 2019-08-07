@@ -331,7 +331,7 @@ contains
             xi_r_f(k) = md%xi_r(k)
          end do
 
-         xi_r_f = xi_r_f(md%n_k:1:-1)
+	 xi_r_f = xi_r_f(md%n_k:1:-1)
 
       end if
 
@@ -352,7 +352,7 @@ contains
             xi_r_1o(k) = md%xi_r(k)
          end do
 
-         xi_r_1o = xi_r_1o(md%n_k:1:-1)
+	 xi_r_1o = xi_r_1o(md%n_k:1:-1)
 
       end if
 
