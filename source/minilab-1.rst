@@ -24,7 +24,7 @@ Download a Working Directory
 ============================
 
 To get started, let's set up a new working directory. Download `this
-<http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-1.tar.gz>`_
+<http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-1.tar.gz>`__
 file and unpack it using tar:
 
 .. code-block:: console

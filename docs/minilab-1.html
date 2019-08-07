@@ -182,7 +182,7 @@ frequencies.</p>
 </div>
 <div class="section" id="download-a-working-directory">
 <h2>Download a Working Directory<a class="headerlink" href="#download-a-working-directory" title="Permalink to this headline">¶</a></h2>
-<p>To get started, let’s set up a new working directory. Download <a class="reference external" href="http://www.astro.wisc.edu/~townsend/resource/teaching/summer-school-2019/townsend-2019-mini-1.tar.gz">this</a>
+<p>To get started, let’s set up a new working directory. Download <a class="reference external" href="http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-1.tar.gz">this</a>
 file and unpack it using tar:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> tar xf townsend-2019-mini-1.tar.gz
 </pre></div>
@@ -248,7 +248,7 @@ an upper limit on the logarithmic change in the central hydrogen
 abundance due to nuclear burning <a class="footnote-reference brackets" href="#f1" id="id1">1</a>. The <code class="docutils literal notranslate"><span class="pre">mesh_delta_coeff</span></code>
 ensures that models have enough mesh points for GYRE to resolve
 pulsation wavefunctions <a class="footnote-reference brackets" href="#f2" id="id2">2</a>.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   
   ! Convective mixing
 
   mixing_length_alpha = 1.8d0
@@ -359,7 +359,8 @@ end of <code class="docutils literal notranslate"><span class="pre">run_star_ext
 </span><span class="hll">
 </span><span class="hll">  <span class="c">! Pass model data to GYRE</span>
 </span><span class="hll">
-</span><span class="hll">  <span class="k">call </span><span class="n">star_get_pulse_data</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;GYRE&#39;</span><span class="p">,</span> <span class="p">.</span><span class="n">FALSE</span><span class="p">.,</span> <span class="p">.</span><span class="n">TRUE</span><span class="p">.,</span> <span class="p">.</span><span class="n">FALSE</span><span class="p">.,</span> <span class="n">global_data</span><span class="p">,</span> <span class="n">point_data</span><span class="p">,</span> <span class="n">ierr</span><span class="p">)</span>
+</span><span class="hll">  <span class="k">call </span><span class="n">star_get_pulse_data</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;GYRE&#39;</span><span class="p">,</span> <span class="p">.</span><span class="n">FALSE</span><span class="p">.,</span> <span class="p">.</span><span class="n">TRUE</span><span class="p">.,</span> <span class="p">.</span><span class="n">FALSE</span><span class="p">.,</span> <span class="p">&amp;</span>
+</span><span class="hll">       <span class="n">global_data</span><span class="p">,</span> <span class="n">point_data</span><span class="p">,</span> <span class="n">ierr</span><span class="p">)</span>
 </span><span class="hll">  <span class="k">if</span> <span class="p">(</span><span class="n">ierr</span> <span class="o">/=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">then</span>
 </span><span class="hll"><span class="k">     print</span> <span class="o">*</span><span class="p">,</span><span class="s1">&#39;Failed when calling star_get_pulse_data&#39;</span>
 </span><span class="hll">     <span class="k">return</span>

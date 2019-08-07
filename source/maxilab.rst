@@ -30,7 +30,7 @@ working directory from MiniLab 3 (with all the changes you have made):
 
 Alternatively, if you were unable to get things working with MiniLab
 3, then you can grab a working directory for the MaxiLab from `here
-<http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-maxi.tar.gz>`_.
+<http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-maxi.tar.gz>`__.
 
 Enabling Non-Adiabatic Effects
 ==============================
@@ -248,8 +248,8 @@ radial modes.
 Picking a Mass
 --------------
 
-Visit the Google docs spreadsheet :ref:`here
-<https://docs.google.com/spreadsheets/d/1c3WuXlwzN944kdXWkwg7bO526MdZxiZeHAC4iK4T0NA/edit?usp=sharing>`,
+Visit the Google docs spreadsheet `here
+<https://docs.google.com/spreadsheets/d/1c3WuXlwzN944kdXWkwg7bO526MdZxiZeHAC4iK4T0NA/edit?usp=sharing>`__,
 and claim a stellar mass (listed in the first column) by adding your
 name in the second column.
 
