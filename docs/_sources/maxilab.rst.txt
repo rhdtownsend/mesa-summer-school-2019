@@ -82,6 +82,7 @@ unstable, modify the ``print`` statement in the ``process_mode``
 callback of ``run_star_extras.f90`` to display growth rates:
 
 .. code-block:: fortran
+      :emphasize-lines: 3-
 
       ! Print out radial order, frequency and growth rate
 

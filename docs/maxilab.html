@@ -230,9 +230,9 @@ unstable, modify the <code class="docutils literal notranslate"><span class="pre
 callback of <code class="docutils literal notranslate"><span class="pre">run_star_extras.f90</span></code> to display growth rates:</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! Print out radial order, frequency and growth rate</span>
 
-<span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Found mode: radial order, frequency, growth rate = &#39;</span><span class="p">,</span> <span class="p">&amp;</span>
-     <span class="n">md</span><span class="p">%</span><span class="n">n_pg</span><span class="p">,</span> <span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">)),</span> <span class="mf">2.</span><span class="o">*</span><span class="n">PI</span><span class="o">*</span><span class="nb">AIMAG</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">))</span>
-</pre></div>
+<span class="hll"><span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Found mode: radial order, frequency, growth rate = &#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+</span><span class="hll">     <span class="n">md</span><span class="p">%</span><span class="n">n_pg</span><span class="p">,</span> <span class="kt">REAL</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">)),</span> <span class="mf">2.</span><span class="o">*</span><span class="n">PI</span><span class="o">*</span><span class="nb">AIMAG</span><span class="p">(</span><span class="n">md</span><span class="p">%</span><span class="n">freq</span><span class="p">(</span><span class="s1">&#39;HZ&#39;</span><span class="p">))</span>
+</span></pre></div>
 </div>
 <p>(The extra factor of <code class="docutils literal notranslate"><span class="pre">2.*PI</span></code> appears because the
 <code class="docutils literal notranslate"><span class="pre">md%freq('HZ')</span></code> function returns the linear frequency, rather
