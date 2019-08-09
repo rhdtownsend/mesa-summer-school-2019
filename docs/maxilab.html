@@ -101,6 +101,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mapping-the-instability-strip">Mapping the Instability Strip</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#picking-a-mass">Picking a Mass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#determining-boundaries">Determining Boundaries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exploring-metallicity-effects">Exploring Metallicity Effects</a></li>
 </ul>
 </li>
 </ul>
@@ -184,8 +186,8 @@ approximation. This will allow us to explore which modes are unstable
 in our model star, and by what mechanism. Then, by extending these
 non-adiabatic calculations to stars with other masses, we will map out
 the <span class="math notranslate nohighlight">\(\beta\)</span> Cephei instability strip.</p>
-<p>As the very first step, make a copy of your
-working directory from MiniLab 3 (with all the changes you have made):</p>
+<p>As the very first step, make a copy of your working directory from
+MiniLab 3 (with all the changes you have made):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cp -a townsend-2019-mini-3 townsend-2019-maxi
 <span class="gp">$</span> <span class="nb">cd</span> townsend-2019-maxi
 </pre></div>
@@ -367,13 +369,58 @@ T\)</span> instead of <span class="math notranslate nohighlight">\({\rm d}W/{\rm
 <div class="section" id="mapping-the-instability-strip">
 <h2>Mapping the Instability Strip<a class="headerlink" href="#mapping-the-instability-strip" title="Permalink to this headline">¶</a></h2>
 <p>As the final part of the MaxiLab, we’re going to use GYRE and MESA to
-map out the extent of the <span class="math notranslate nohighlight">\(beta\)</span> Cephei instability strip for
-radial modes.</p>
+map out the extent of the <span class="math notranslate nohighlight">\(\beta\)</span> Cephei instability strip for
+radial modes. This will involve repeating the ZAMS-to-TAMS evolution
+for a range of different stellar masses, and noting where the F and
+1-O radial modes transition from stable to unstanble (and vice
+versa). To speed things up, we’ll crowd-source the calculations: each
+student will focus on a single stellar mass, and record their results
+in a shared online spreadsheet.</p>
 <div class="section" id="picking-a-mass">
 <h3>Picking a Mass<a class="headerlink" href="#picking-a-mass" title="Permalink to this headline">¶</a></h3>
-<p>Visit the Google docs spreadsheet <a class="reference external" href="https://docs.google.com/spreadsheets/d/1c3WuXlwzN944kdXWkwg7bO526MdZxiZeHAC4iK4T0NA/edit?usp=sharing">here</a>,
-and claim a stellar mass (listed in the first column) by adding your
-name in the second column.</p>
+<p>The first step is for each student to pick a (different) mass.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Visit the Google spreadsheet <a class="reference external" href="https://docs.google.com/spreadsheets/d/1c3WuXlwzN944kdXWkwg7bO526MdZxiZeHAC4iK4T0NA/edit?usp=sharing">here</a>,
+and claim a row (identified by a unique <em>Task Index</em> number) by
+entering your name to the <em>Name</em> column. Make a note of the
+mass listed in the <em>Stellar Mass</em> column.</p>
+</div>
+</div>
+<div class="section" id="determining-boundaries">
+<h3>Determining Boundaries<a class="headerlink" href="#determining-boundaries" title="Permalink to this headline">¶</a></h3>
+<p>The next step is to perform the calculation and record the instability
+strip boundaries.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Modify <code class="docutils literal notranslate"><span class="pre">inlist_to_zams_project</span></code> and <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_project</span></code> in
+your working directory, to set the initial stellar mass to your
+assigned value. Then, repeat the pre-main sequence to ZAMS run
+(don’t forget to do this!), followed by the ZAMS-to-TAMS
+run. During the latter, note down the effective temperature
+<span class="math notranslate nohighlight">\(T_{\rm eff}\)</span> and log luminosity <span class="math notranslate nohighlight">\(\log L/L_{\odot}\)</span>
+where either the F or 1-O mode first becomes unstable (you can do
+this by inspecting the terminal output, or by analyzing the
+<code class="docutils literal notranslate"><span class="pre">history.data</span></code> file after the run). Note the corresponding values
+when both modes again become stable. Enter these data in the
+appropriate <em>Solar Metallicity</em> columns of the spreadsheet.</p>
+</div>
+<p>When all the data are collected, we’ll combine them to create a map of
+the instability strip boundaries in the Hertzsprung-Russell diagram.</p>
+</div>
+<div class="section" id="exploring-metallicity-effects">
+<h3>Exploring Metallicity Effects<a class="headerlink" href="#exploring-metallicity-effects" title="Permalink to this headline">¶</a></h3>
+<p>Since the instability of <span class="math notranslate nohighlight">\(\beta\)</span> Cephei stars is driven by iron
+and nickel opacity, we can expect it to be sensitive to metallicity
+<span class="math notranslate nohighlight">\(Z\)</span>. We’ll finish up the maxilab by exploring how our
+instability strip changes for different <span class="math notranslate nohighlight">\(Z\)</span>.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Repeat your calculation from the previous step, for metallicities
+of 75% solar (<span class="math notranslate nohighlight">\(Z = 0.01065\)</span>) and 50% solar (<span class="math notranslate nohighlight">\(Z =
+0.0071\)</span>). Enter the results in the appropriate columns of the
+spreadsheet.</p>
+</div>
 </div>
 </div>
 </div>

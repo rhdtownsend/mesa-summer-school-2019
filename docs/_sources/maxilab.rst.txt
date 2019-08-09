@@ -20,8 +20,8 @@ in our model star, and by what mechanism. Then, by extending these
 non-adiabatic calculations to stars with other masses, we will map out
 the :math:`\beta` Cephei instability strip.
 
-As the very first step, make a copy of your
-working directory from MiniLab 3 (with all the changes you have made):
+As the very first step, make a copy of your working directory from
+MiniLab 3 (with all the changes you have made):
 
 .. code-block:: console
 
@@ -245,14 +245,61 @@ Mapping the Instability Strip
 =============================
 
 As the final part of the MaxiLab, we're going to use GYRE and MESA to
-map out the extent of the :math:`beta` Cephei instability strip for
-radial modes.
+map out the extent of the :math:`\beta` Cephei instability strip for
+radial modes. This will involve repeating the ZAMS-to-TAMS evolution
+for a range of different stellar masses, and noting where the F and
+1-O radial modes transition from stable to unstanble (and vice
+versa). To speed things up, we'll crowd-source the calculations: each
+student will focus on a single stellar mass, and record their results
+in a shared online spreadsheet.
 
 Picking a Mass
 --------------
 
-Visit the Google docs spreadsheet `here
-<https://docs.google.com/spreadsheets/d/1c3WuXlwzN944kdXWkwg7bO526MdZxiZeHAC4iK4T0NA/edit?usp=sharing>`__,
-and claim a stellar mass (listed in the first column) by adding your
-name in the second column.
+The first step is for each student to pick a (different) mass.
 
+.. admonition:: Exercise
+
+   Visit the Google spreadsheet `here
+   <https://docs.google.com/spreadsheets/d/1c3WuXlwzN944kdXWkwg7bO526MdZxiZeHAC4iK4T0NA/edit?usp=sharing>`__,
+   and claim a row (identified by a unique *Task Index* number) by
+   entering your name to the *Name* column. Make a note of the
+   mass listed in the *Stellar Mass* column.
+
+Determining Boundaries
+----------------------
+
+The next step is to perform the calculation and record the instability
+strip boundaries.
+
+.. admonition:: Exercise
+
+   Modify ``inlist_to_zams_project`` and ``inlist_to_tams_project`` in
+   your working directory, to set the initial stellar mass to your
+   assigned value. Then, repeat the pre-main sequence to ZAMS run
+   (don't forget to do this!), followed by the ZAMS-to-TAMS
+   run. During the latter, note down the effective temperature
+   :math:`T_{\rm eff}` and log luminosity :math:`\log L/L_{\odot}`
+   where either the F or 1-O mode first becomes unstable (you can do
+   this by inspecting the terminal output, or by analyzing the
+   ``history.data`` file after the run). Note the corresponding values
+   when both modes again become stable. Enter these data in the
+   appropriate *Solar Metallicity* columns of the spreadsheet.
+
+When all the data are collected, we'll combine them to create a map of
+the instability strip boundaries in the Hertzsprung-Russell diagram.
+
+Exploring Metallicity Effects
+-----------------------------
+
+Since the instability of :math:`\beta` Cephei stars is driven by iron
+and nickel opacity, we can expect it to be sensitive to metallicity
+:math:`Z`. We'll finish up the maxilab by exploring how our
+instability strip changes for different :math:`Z`.
+
+.. admonition:: Exercise
+
+   Repeat your calculation from the previous step, for metallicities
+   of 75% solar (:math:`Z = 0.01065`) and 50% solar (:math:`Z =
+   0.0071`). Enter the results in the appropriate columns of the
+   spreadsheet.
