@@ -233,8 +233,8 @@ step is to check whether this is the case.
 
 .. admonition:: Exercise
       
-   Copy ``$MESA_DIR/star/defaults/history_columns.list`` into the
-   working directory. Find which history item contains the dynamical
+   Edit the existing ``history_columns.list`` file in the working
+   directory. Find which history item contains the dynamical
    timescale, and uncomment the corresponding line. Then, modify
    ``inlist_to_tams_pgstar`` to add this timescale to each of the
    plots in the history panel (hint: use the
