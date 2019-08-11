@@ -180,20 +180,20 @@ flag:
 Plotting the Periods
 ====================
 
-We're now in a position to add a PGstar window to our ZAMS-to-TAMS
+We're now in a position to add a PGstar panel to our ZAMS-to-TAMS
 run, showing how the mode periods change as the star evolves. The type
-of window we'll use is called a 'history panel', which plots columns
+of panel we'll use is called a 'history panel', which plots columns
 from the history file as a function of model number or time.
 
 Open up ``inlist_to_tams_pgstar``, and add the following highlighted
 code at the bottom:
 
 .. code-block:: fortran
-  :emphasize-lines: 1-
+  :emphasize-lines: 3-
 
-  ! Show pulsation periods
+  ! >>> Insert additional parameters below
 
-  History_Panels1_win_flag = .true.
+  Grid1_plot_name(5) = 'History_Panels1'
 
   History_Panels1_num_panels = 2
 
@@ -210,6 +210,10 @@ code at the bottom:
   History_Panels1_other_yaxis_name(2) = ''
   History_Panels1_other_ymin(2) = 0
 
+(Here, the first line indicate where in the existing grid layout to
+place the history panel; the subsequent lines specify what to plot in
+the panel).
+  
 Now re-run the ZAMS-to-TAMS evolution, and consider the following questions:
 
   - Why do the mode periods get longer for the most of the run --- but
