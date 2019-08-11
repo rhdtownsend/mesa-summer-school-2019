@@ -423,7 +423,7 @@
 
 !# timescales
 
-      dynamic_timescale ! dynamic timescale (seconds) -- estimated by 2*pi*sqrt(r^3/(G*m))
+      !dynamic_timescale ! dynamic timescale (seconds) -- estimated by 2*pi*sqrt(r^3/(G*m))
       !kh_timescale ! kelvin-helmholtz timescale (years)
       !mdot_timescale ! star_mass/abs(star_mdot) (years)
       !kh_div_mdot_timescales ! kh_timescale/mdot_timescale
