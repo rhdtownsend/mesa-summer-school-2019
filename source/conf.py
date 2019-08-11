@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'GYRE in MESA Lab'
-copyright = '2019, Rich Townsend'
-author = 'Rich Townsend'
+copyright = '2019, Rich Townsend, Alina Istrate & Anne Thoul'
+author = 'Rich Townsend, Alina Istrate & Anne Thoul'
 
 
 # -- General configuration ---------------------------------------------------
