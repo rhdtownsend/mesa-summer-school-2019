@@ -300,7 +300,8 @@ available for us to call.</p>
 <h3>Initialize GYRE<a class="headerlink" href="#initialize-gyre" title="Permalink to this headline">¶</a></h3>
 <p>Let’s now add code to initialize GYRE. Find the <code class="docutils literal notranslate"><span class="pre">extras_startup</span></code>
 subroutine and add the following highlighted code below the comment
-line (rather than typing this by hand, you can use cut-and-paste):</p>
+line (to avoid the possibility of typos, it’s better you can use
+cut-and-paste rather than typing this by hand):</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! &gt;&gt;&gt; Insert additional code below</span>
 
 <span class="hll"><span class="c">! Initialize GYRE</span>
@@ -318,7 +319,7 @@ line (rather than typing this by hand, you can use cut-and-paste):</p>
 </span><span class="hll"><span class="k">call </span><span class="n">gyre_set_constant</span><span class="p">(</span><span class="s1">&#39;L_SUN&#39;</span><span class="p">,</span> <span class="n">lsol</span><span class="p">)</span>
 </span></pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">gyre_init</span></code> call takes care of the initialization; it’s single
+<p>The <code class="docutils literal notranslate"><span class="pre">gyre_init</span></code> call takes care of the initialization; its single
 argument is the name of the GYRE input file to read parameters
 from. Inside your working directory, the file <code class="docutils literal notranslate"><span class="pre">gyre.in</span></code> should
 already be present; we’ll be editing it later on. The subsequent calls

@@ -133,7 +133,8 @@ Initialize GYRE
 
 Let's now add code to initialize GYRE. Find the ``extras_startup``
 subroutine and add the following highlighted code below the comment
-line (rather than typing this by hand, you can use cut-and-paste):
+line (to avoid the possibility of typos, it's better you can use
+cut-and-paste rather than typing this by hand):
 
 .. code-block:: fortran
     :emphasize-lines: 3-
@@ -154,7 +155,7 @@ line (rather than typing this by hand, you can use cut-and-paste):
     call gyre_set_constant('R_SUN', rsol)
     call gyre_set_constant('L_SUN', lsol)
 
-The ``gyre_init`` call takes care of the initialization; it's single
+The ``gyre_init`` call takes care of the initialization; its single
 argument is the name of the GYRE input file to read parameters
 from. Inside your working directory, the file ``gyre.in`` should
 already be present; we'll be editing it later on. The subsequent calls
