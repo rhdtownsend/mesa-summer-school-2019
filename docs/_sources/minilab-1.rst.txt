@@ -49,7 +49,7 @@ Now let's evolve the model. We run first using ``inlist_to_zams`` as
 our master inlist, which evolves a pre-main sequence model to the
 ZAMS; and then using ``inlist_to_tams``, which takes the ZAMS model
 and evolves it to the TAMS. Note that we bypass the ``rn`` script,
-instead running the ``star`` program directly; this allows us to
+instead running the ``star`` program directly [#f1]_; this allows us to
 specify the master inlist on the command line:
 
 .. code-block:: console
@@ -57,8 +57,9 @@ specify the master inlist on the command line:
    $ ./star inlist_to_zams
    $ ./star inlist_to_tams
 
-During the runs, there will be a standard set of PGstar windows
-displaying the progress.
+During the runs a single PGstar window will display various plots in a
+grid layout. We'll be adding to these plots during the MiniLabs and
+Maxilab.
 
 To get an idea of what settings we're using for these calculations,
 take a look inside ``inlist_to_tams_project``, which contains the
@@ -81,9 +82,9 @@ Here, we configure timestep and mesh parameters. We keep the timestep
 (relatively) short to ensure that we can adequately follow the
 ZAMS-to-TAMS evolution, and we use the ``delta_*`` settings to place
 an upper limit on the logarithmic change in the central hydrogen
-abundance due to nuclear burning [#f1]_. The ``mesh_delta_coeff``
+abundance due to nuclear burning [#f2]_. The ``mesh_delta_coeff``
 ensures that models have enough mesh points for GYRE to resolve
-pulsation wavefunctions [#f2]_.
+pulsation wavefunctions [#f3]_.
 
 .. literalinclude:: townsend-2019-mini-1/inlist_to_tams_project
    :start-after: use_dedt_form_of_energy_eqn
@@ -289,9 +290,17 @@ what we'd expect for :math:`\beta` Cephei stars.
 
 .. rubric:: Footnotes
 
-.. [#f1] Without these settings, MESA tends to gallop off near the end
+.. [#f1] When using this ``./star`` trick, you can't do restarts
+	 using the ``./re`` script. Instead, you should chose which
+	 photo in the ``photos`` subdirectory you want to restart
+	 from; copy this into the working directory with the name
+	 ``restart_photo``; and then run ``./star`` as before. If you
+	 then want to *stop* doing restarts, simply delete
+	 ``restart_photo``.
+
+.. [#f2] Without these settings, MESA tends to gallop off near the end
          of the main sequence, and doesn't properly resolve the 'Henyey hook'
 	 in the Hertzsprung-Russell diagram where massive stars briefly evolve
 	 to the blue.
-.. [#f2] GYRE is able to do remeshing itself, but we're not going to
+.. [#f3] GYRE is able to do remeshing itself, but we're not going to
          use that particular functionality.

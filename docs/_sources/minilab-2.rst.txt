@@ -180,22 +180,25 @@ flag:
 Plotting the Periods
 ====================
 
-We're now in a position to add a PGstar window to our ZAMS-to-TAMS
+We're now in a position to add a PGstar panel to our ZAMS-to-TAMS
 run, showing how the mode periods change as the star evolves. The type
-of window we'll use is called a 'history panel', which plots columns
+of panel we'll use is called a 'history panel', which plots columns
 from the history file as a function of model number or time.
 
 Open up ``inlist_to_tams_pgstar``, and add the following highlighted
 code at the bottom:
 
 .. code-block:: fortran
-  :emphasize-lines: 1-
+  :emphasize-lines: 3-
 
-  ! Show pulsation periods
+  ! >>> Insert additional parameters below
 
-  History_Panels1_win_flag = .true.
+  ! History panel showing periods
+
+  Grid1_plot_name(5) = 'History_Panels1'
 
   History_Panels1_num_panels = 2
+  History_Panels1_title = 'Periods'
 
   History_Panels1_xaxis_name = 'star_age'
   History_Panels1_max_width = 0
@@ -210,6 +213,10 @@ code at the bottom:
   History_Panels1_other_yaxis_name(2) = ''
   History_Panels1_other_ymin(2) = 0
 
+(Here, the first line indicate where in the existing grid layout to
+place the history panel; the subsequent lines specify what to plot in
+the panel).
+  
 Now re-run the ZAMS-to-TAMS evolution, and consider the following questions:
 
   - Why do the mode periods get longer for the most of the run --- but
@@ -217,6 +224,15 @@ Now re-run the ZAMS-to-TAMS evolution, and consider the following questions:
 
   - Why do the mode periods move in lockstep, with the 1-O mode being
     an almost-fixed multiple of the F mode?
+
+.. admonition:: *Optional* Exercise
+
+   In addition to printing periods to the terminal, it's often useful
+   to display them in the PGstar window. Modifiy
+   ``inlist_to_tams_pgstar`` to set ``Text_Summary1_name(1,4)`` (the
+   first item in the fourth column of the text area) to
+   ``'period_f'``. Make a similar modifications to add ``period_1o`` as
+   the second item.
 
 Quantifying the Period Scaling
 ==============================
@@ -233,8 +249,8 @@ step is to check whether this is the case.
 
 .. admonition:: Exercise
       
-   Copy ``$MESA_DIR/star/defaults/history_columns.list`` into the
-   working directory. Find which history item contains the dynamical
+   Edit the existing ``history_columns.list`` file in the working
+   directory. Find which history item contains the dynamical
    timescale, and uncomment the corresponding line. Then, modify
    ``inlist_to_tams_pgstar`` to add this timescale to each of the
    plots in the history panel (hint: use the
@@ -247,3 +263,8 @@ evolves toward the TAMS is driven mostly by the :math:`\tau_{\rm dyn}`
 increase, which in turn is driven by the expansion of the star. The
 brief reversal in this behavior, near the TAMS, is associated with the
 Henyey hook where the star shrinks.
+
+.. admonition:: *Optional* Exercise
+
+   Modifiy ``inlist_to_tams_pgstar`` to add the dynamical timescale to
+   the text area.

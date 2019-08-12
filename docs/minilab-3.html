@@ -336,14 +336,24 @@ GYRE has been run.</p></li>
 <p>Our final step is to add a PGstar window to our ZAMS-to-TAMS run,
 showing how the mode radial displacement wavefunctions change as the
 star evolves. For this window, we’ll use a ‘profile panel’.</p>
-<div class="admonition-exercise admonition">
-<p class="admonition-title">Exercise</p>
-<p>Have a look through <code class="docutils literal notranslate"><span class="pre">$MESA_DIR/star/defaults/pgstar.defaults</span></code> to
-get an idea how profile panels work. Then, add a profile panel
-window showing <code class="docutils literal notranslate"><span class="pre">xi_r_f</span></code> on the y-axis, and <code class="docutils literal notranslate"><span class="pre">xi_r_1o</span></code> on the
-‘other’ y-axis. Plot these quantities versus <span class="math notranslate nohighlight">\(\log(1-m/M)\)</span>, which
-is available in profile data as <code class="docutils literal notranslate"><span class="pre">logxq</span></code>.</p>
+<p>Open up <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code>, and add the following highlighted
+code at the bottom:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="c">! Profile panel showing wavefunctions</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">Grid1_plot_name</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;Profile_Panels1&#39;</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">Profile_Panels1_num_panels</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class="hll"><span class="n">Profile_Panels1_title</span> <span class="o">=</span> <span class="s1">&#39;Displacement Wavefunctions&#39;</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">Profile_Panels1_xaxis_name</span> <span class="o">=</span> <span class="s1">&#39;logxq&#39;</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">Profile_Panels1_yaxis_name</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;xi_r_f&#39;</span>
+</span><span class="hll"><span class="n">Profile_Panels1_other_yaxis_name</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;xi_r_1o&#39;</span>
+</span></pre></div>
 </div>
+<p>(Here, the ‘’logxq’’ choice for the x-axis uses the quantity
+<span class="math notranslate nohighlight">\(\log(1-m/M)\)</span>, which nicely emphasizes the outer parts of the
+star).</p>
 <p>Looking at the wavefunctions, we can clearly see the key difference
 between the radial and first-overtone modes: the latter changes sign
 somewhere between the center and the surface, while the former does
@@ -373,7 +383,7 @@ period shorter.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Rich Townsend
+        &copy; Copyright 2019, Rich Townsend, Alina Istrate &amp; Anne Thoul
 
     </p>
   </div>

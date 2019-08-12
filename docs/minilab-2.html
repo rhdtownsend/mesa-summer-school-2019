@@ -309,17 +309,20 @@ flag:</p>
 </div>
 <div class="section" id="plotting-the-periods">
 <h2>Plotting the Periods<a class="headerlink" href="#plotting-the-periods" title="Permalink to this headline">¶</a></h2>
-<p>We’re now in a position to add a PGstar window to our ZAMS-to-TAMS
+<p>We’re now in a position to add a PGstar panel to our ZAMS-to-TAMS
 run, showing how the mode periods change as the star evolves. The type
-of window we’ll use is called a ‘history panel’, which plots columns
+of panel we’ll use is called a ‘history panel’, which plots columns
 from the history file as a function of model number or time.</p>
 <p>Open up <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code>, and add the following highlighted
 code at the bottom:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="c">! Show pulsation periods</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! &gt;&gt;&gt; Insert additional parameters below</span>
+
+<span class="hll"><span class="c">! History panel showing periods</span>
 </span><span class="hll">
-</span><span class="hll"><span class="n">History_Panels1_win_flag</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+</span><span class="hll"><span class="n">Grid1_plot_name</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;History_Panels1&#39;</span>
 </span><span class="hll">
 </span><span class="hll"><span class="n">History_Panels1_num_panels</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class="hll"><span class="n">History_Panels1_title</span> <span class="o">=</span> <span class="s1">&#39;Periods&#39;</span>
 </span><span class="hll">
 </span><span class="hll"><span class="n">History_Panels1_xaxis_name</span> <span class="o">=</span> <span class="s1">&#39;star_age&#39;</span>
 </span><span class="hll"><span class="n">History_Panels1_max_width</span> <span class="o">=</span> <span class="mi">0</span>
@@ -335,6 +338,9 @@ code at the bottom:</p>
 </span><span class="hll"><span class="n">History_Panels1_other_ymin</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
 </span></pre></div>
 </div>
+<p>(Here, the first line indicate where in the existing grid layout to
+place the history panel; the subsequent lines specify what to plot in
+the panel).</p>
 <p>Now re-run the ZAMS-to-TAMS evolution, and consider the following questions:</p>
 <blockquote>
 <div><ul class="simple">
@@ -344,6 +350,15 @@ then briefly get shorter at the end of the run?</p></li>
 an almost-fixed multiple of the F mode?</p></li>
 </ul>
 </div></blockquote>
+<div class="admonition-optional-exercise admonition">
+<p class="admonition-title"><em>Optional</em> Exercise</p>
+<p>In addition to printing periods to the terminal, it’s often useful
+to display them in the PGstar window. Modifiy
+<code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> to set <code class="docutils literal notranslate"><span class="pre">Text_Summary1_name(1,4)</span></code> (the
+first item in the fourth column of the text area) to
+<code class="docutils literal notranslate"><span class="pre">'period_f'</span></code>. Make a similar modifications to add <code class="docutils literal notranslate"><span class="pre">period_1o</span></code> as
+the second item.</p>
+</div>
 </div>
 <div class="section" id="quantifying-the-period-scaling">
 <h2>Quantifying the Period Scaling<a class="headerlink" href="#quantifying-the-period-scaling" title="Permalink to this headline">¶</a></h2>
@@ -358,8 +373,8 @@ therefore expect the oscillation periods <span class="math notranslate nohighlig
 step is to check whether this is the case.</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>Copy <code class="docutils literal notranslate"><span class="pre">$MESA_DIR/star/defaults/history_columns.list</span></code> into the
-working directory. Find which history item contains the dynamical
+<p>Edit the existing <code class="docutils literal notranslate"><span class="pre">history_columns.list</span></code> file in the working
+directory. Find which history item contains the dynamical
 timescale, and uncomment the corresponding line. Then, modify
 <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> to add this timescale to each of the
 plots in the history panel (hint: use the
@@ -372,6 +387,11 @@ evolves toward the TAMS is driven mostly by the <span class="math notranslate no
 increase, which in turn is driven by the expansion of the star. The
 brief reversal in this behavior, near the TAMS, is associated with the
 Henyey hook where the star shrinks.</p>
+<div class="admonition-optional-exercise admonition">
+<p class="admonition-title"><em>Optional</em> Exercise</p>
+<p>Modifiy <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> to add the dynamical timescale to
+the text area.</p>
+</div>
 </div>
 </div>
 
@@ -395,7 +415,7 @@ Henyey hook where the star shrinks.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Rich Townsend
+        &copy; Copyright 2019, Rich Townsend, Alina Istrate &amp; Anne Thoul
 
     </p>
   </div>

@@ -203,13 +203,27 @@ Our final step is to add a PGstar window to our ZAMS-to-TAMS run,
 showing how the mode radial displacement wavefunctions change as the
 star evolves. For this window, we'll use a 'profile panel'.
 
-.. admonition:: Exercise
+Open up ``inlist_to_tams_pgstar``, and add the following highlighted
+code at the bottom:
 
-   Have a look through ``$MESA_DIR/star/defaults/pgstar.defaults`` to
-   get an idea how profile panels work. Then, add a profile panel
-   window showing ``xi_r_f`` on the y-axis, and ``xi_r_1o`` on the
-   'other' y-axis. Plot these quantities versus :math:`\log(1-m/M)`, which
-   is available in profile data as ``logxq``.
+.. code-block:: fortran
+  :emphasize-lines: 1-
+
+  ! Profile panel showing wavefunctions
+
+  Grid1_plot_name(6) = 'Profile_Panels1'
+
+  Profile_Panels1_num_panels = 1
+  Profile_Panels1_title = 'Displacement Wavefunctions'
+
+  Profile_Panels1_xaxis_name = 'logxq'
+
+  Profile_Panels1_yaxis_name(1) = 'xi_r_f'
+  Profile_Panels1_other_yaxis_name(1) = 'xi_r_1o'
+
+(Here, the ''logxq'' choice for the x-axis uses the quantity
+:math:`\log(1-m/M)`, which nicely emphasizes the outer parts of the
+star).
 
 Looking at the wavefunctions, we can clearly see the key difference
 between the radial and first-overtone modes: the latter changes sign

@@ -248,7 +248,11 @@ the run do the F and 1-O modes transition from stable to unstable?</p>
 <div class="section" id="adding-growth-rates-to-history-output">
 <h3>Adding Growth Rates to History Output<a class="headerlink" href="#adding-growth-rates-to-history-output" title="Permalink to this headline">¶</a></h3>
 <p>As the next step, we’ll add two extra columns to history output, to
-store the growth rates for the F and 1-O modes.</p>
+store the growth rates for the F and 1-O modes. Rather than storing
+the growth rates in units of per second, we’ll use per year — the
+latter is conceptially easier to work with (e.g., a growth rate of
+<span class="math notranslate nohighlight">\(3\,{\rm yr}^{-1}\)</span> means the pulsation grows by 3 e-foldings
+per year).</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p>Using a similar approach as we did for the mode periods in
@@ -257,7 +261,11 @@ the growth rates.  In brief,</p>
 <ul class="simple">
 <li><p>create two new module variables to store the growth rates (call
 them <code class="docutils literal notranslate"><span class="pre">growth_f</span></code> and <code class="docutils literal notranslate"><span class="pre">growth_1o</span></code>).</p></li>
-<li><p>change the <code class="docutils literal notranslate"><span class="pre">process_mode</span></code> callback to store data into these variables.</p></li>
+<li><p>change the <code class="docutils literal notranslate"><span class="pre">process_mode</span></code> callback to store the growth rate in
+<span class="math notranslate nohighlight">\({\rm yr}^{-1}\)</span> into these variables. To get the rate in
+these units, use <code class="docutils literal notranslate"><span class="pre">2.*PI*AIMAG(md%freq('HZ'))*secyer</span></code> (the
+<code class="docutils literal notranslate"><span class="pre">secyer</span></code> constant, from the <code class="docutils literal notranslate"><span class="pre">const</span></code> module, gives the number of
+seconds in a year).</p></li>
 <li><p>change the <code class="docutils literal notranslate"><span class="pre">how_many_extra_history_columns</span></code> and
 <code class="docutils literal notranslate"><span class="pre">data_for_extra_history_columns</span></code> hooks to copy data from these
 variables into the new columns.</p></li>
@@ -311,7 +319,7 @@ wavefunctions in <a class="reference internal" href="minilab-3.html#minilab-3"><
 1-O modes to the profile output.  In brief,</p>
 <ul class="simple">
 <li><p>create two new module variables to store the differential work (call
-them <code class="docutils literal notranslate"><span class="pre">work_f</span></code> and <code class="docutils literal notranslate"><span class="pre">work_1o</span></code>).</p></li>
+them <code class="docutils literal notranslate"><span class="pre">dW_dx_f</span></code> and <code class="docutils literal notranslate"><span class="pre">dW_dx_1o</span></code>).</p></li>
 <li><p>change the <code class="docutils literal notranslate"><span class="pre">process_mode</span></code> callback to store data into these
 variables. (GYRE provides the differential work at the <code class="docutils literal notranslate"><span class="pre">k</span></code>’th
 grid point via the <code class="docutils literal notranslate"><span class="pre">md%dW_dx(k)</span></code> function).</p></li>
@@ -323,17 +331,34 @@ variables into the new columns.</p></li>
 </div>
 <div class="section" id="plotting-the-differential-work">
 <h3>Plotting the Differential Work<a class="headerlink" href="#plotting-the-differential-work" title="Permalink to this headline">¶</a></h3>
-<p>To view the fruits of our labor, let’s now add a profile panel to show
-the differential work data.</p>
+<p>To view the fruits of our labor, let’s now add a final profile panel to show
+the differential work data. Open up <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code>, and add the following highlighted
+code at the bottom:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="c">! Profile panel showing differential work</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">Grid1_plot_name</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;Profile_Panels2&#39;</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">Profile_Panels2_num_panels</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class="hll"><span class="n">Profile_Panels2_title</span> <span class="o">=</span> <span class="s1">&#39;Differential Work&#39;</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">Profile_Panels2_xaxis_name</span> <span class="o">=</span> <span class="s1">&#39;logT&#39;</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">Profile_Panels2_yaxis_name</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;dW_dx_f&#39;</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">Profile_Panels2_yaxis_name</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;dW_dx_1o&#39;</span>
+</span></pre></div>
+</div>
+<p>(Unlike the previous profile panel, we now use <code class="docutils literal notranslate"><span class="pre">logT</span></code> on the x-axis;
+this allow us to read off the temperature in the driving/damping
+regions. Also, we create separate plots for the F and 1-O modes).</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>Edit <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code>, adding a second profile panel that
-plots the differential work for the two modes. For the x-axis, use
-<code class="docutils literal notranslate"><span class="pre">logT</span></code> instead of <code class="docutils literal notranslate"><span class="pre">logxm</span></code> (this allows us to see what the
-temperature is in the driving/damping regions). On the right-hand
-axes, plot the log of the opacity.</p>
+<p>Further edit <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> to add <code class="docutils literal notranslate"><span class="pre">log_opacity</span></code> (the
+logarithm of the opacity) to the right-hand axes of the
+differential work plots.</p>
 </div>
-<p>Repeat the ZAMS-to-TAMS run, and think about the following questions:</p>
+<p>With these changes, repeat the ZAMS-to-TAMS run, and think about the
+following questions:</p>
 <ul class="simple">
 <li><p>Where in the star is the driving strongest?</p></li>
 <li><p>How does this driving region relate to the peak in the opacity data
@@ -358,7 +383,7 @@ d}W/{\rm d}x\)</span> via</p>
 <p>(here, <span class="math notranslate nohighlight">\(R\)</span> is the stellar radius).</p>
 <blockquote>
 <div><div class="admonition-optional-exercise admonition">
-<p class="admonition-title">Optional Exercise</p>
+<p class="admonition-title"><em>Optional</em> Exercise</p>
 <p>Modify <code class="docutils literal notranslate"><span class="pre">run_star_extras.f90</span></code> to store <span class="math notranslate nohighlight">\({\rm d}W/{\rm d}\ln
 T\)</span> instead of <span class="math notranslate nohighlight">\({\rm d}W/{\rm d}x\)</span> in the <code class="docutils literal notranslate"><span class="pre">work_f</span></code> and
 <code class="docutils literal notranslate"><span class="pre">work_1f</span></code> variables.</p>
@@ -372,10 +397,14 @@ T\)</span> instead of <span class="math notranslate nohighlight">\({\rm d}W/{\rm
 map out the extent of the <span class="math notranslate nohighlight">\(\beta\)</span> Cephei instability strip for
 radial modes. This will involve repeating the ZAMS-to-TAMS evolution
 for a range of different stellar masses, and noting where the F and
-1-O radial modes transition from stable to unstanble (and vice
+1-O radial modes transition from stable to unstable (and vice
 versa). To speed things up, we’ll crowd-source the calculations: each
 student will focus on a single stellar mass, and record their results
 in a shared online spreadsheet.</p>
+<p>If you haven’t had any luck in getting the first part of the MaxiLab
+working, then you can grab the solution from <a class="reference external" href="http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-maxi-solution.tar.gz">here</a>;
+use this as your working directory for the instability strip
+calculations.</p>
 <div class="section" id="picking-a-mass">
 <h3>Picking a Mass<a class="headerlink" href="#picking-a-mass" title="Permalink to this headline">¶</a></h3>
 <p>The first step is for each student to pick a (different) mass.</p>
@@ -393,7 +422,7 @@ mass listed in the <em>Stellar Mass</em> column.</p>
 strip boundaries.</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>Modify <code class="docutils literal notranslate"><span class="pre">inlist_to_zams_project</span></code> and <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_project</span></code> in
+<p>Modify <code class="docutils literal notranslate"><span class="pre">inlist_to_AM's_project</span></code> and <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_project</span></code> in
 your working directory, to set the initial stellar mass to your
 assigned value. Then, repeat the pre-main sequence to ZAMS run
 (don’t forget to do this!), followed by the ZAMS-to-TAMS
@@ -404,6 +433,21 @@ this by inspecting the terminal output, or by analyzing the
 <code class="docutils literal notranslate"><span class="pre">history.data</span></code> file after the run). Note the corresponding values
 when both modes again become stable. Enter these data in the
 appropriate <em>Solar Metallicity</em> columns of the spreadsheet.</p>
+</div>
+<p>For some choices of stellar mass, there can be multiple boundaries; if
+you encounter this situation for your assigned stellar mass, then
+enter the first boundary (where either mode first becomes unstable)
+and last boundary (when both modes become stable) into the
+spreadsheet.</p>
+<div class="admonition-optional-exercise admonition">
+<p class="admonition-title"><em>Optional</em> Exercise</p>
+<p>If you’re feeling bold, see if you can increase the precision with
+which the boundaries are determined. One approach is to modify the
+<code class="docutils literal notranslate"><span class="pre">extras_check_model</span></code> hook, to retry the step with a reduced
+timestep when a transition from stable to unstable (or vice versa)
+is detected. See <a class="reference external" href="http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/run_star_extras_adaptive.f90">this</a>
+<code class="docutils literal notranslate"><span class="pre">run_star_extras.f90</span></code> file for an example implementation of this
+adaptive timestepping approach.</p>
 </div>
 <p>When all the data are collected, we’ll combine them to create a map of
 the instability strip boundaries in the Hertzsprung-Russell diagram.</p>
@@ -421,6 +465,8 @@ of 75% solar (<span class="math notranslate nohighlight">\(Z = 0.01065\)</span>)
 0.0071\)</span>). Enter the results in the appropriate columns of the
 spreadsheet.</p>
 </div>
+<p>During these calculations, be sure to look for changes in the
+iron-bump opacity peak resulting from the reduced metallicity.</p>
 </div>
 </div>
 </div>
@@ -443,7 +489,7 @@ spreadsheet.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Rich Townsend
+        &copy; Copyright 2019, Rich Townsend, Alina Istrate &amp; Anne Thoul
 
     </p>
   </div>

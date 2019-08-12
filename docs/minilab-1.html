@@ -203,14 +203,15 @@ the working directory and build the code:</p>
 our master inlist, which evolves a pre-main sequence model to the
 ZAMS; and then using <code class="docutils literal notranslate"><span class="pre">inlist_to_tams</span></code>, which takes the ZAMS model
 and evolves it to the TAMS. Note that we bypass the <code class="docutils literal notranslate"><span class="pre">rn</span></code> script,
-instead running the <code class="docutils literal notranslate"><span class="pre">star</span></code> program directly; this allows us to
+instead running the <code class="docutils literal notranslate"><span class="pre">star</span></code> program directly <a class="footnote-reference brackets" href="#f1" id="id1">1</a>; this allows us to
 specify the master inlist on the command line:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./star inlist_to_zams
 <span class="gp">$</span> ./star inlist_to_tams
 </pre></div>
 </div>
-<p>During the runs, there will be a standard set of PGstar windows
-displaying the progress.</p>
+<p>During the runs a single PGstar window will display various plots in a
+grid layout. We’ll be adding to these plots during the MiniLabs and
+Maxilab.</p>
 <p>To get an idea of what settings we’re using for these calculations,
 take a look inside <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_project</span></code>, which contains the
 important parts of the ZAMS-to-TAMS run. Here are a few excerpts:</p>
@@ -245,9 +246,9 @@ abundances.</p>
 (relatively) short to ensure that we can adequately follow the
 ZAMS-to-TAMS evolution, and we use the <code class="docutils literal notranslate"><span class="pre">delta_*</span></code> settings to place
 an upper limit on the logarithmic change in the central hydrogen
-abundance due to nuclear burning <a class="footnote-reference brackets" href="#f1" id="id1">1</a>. The <code class="docutils literal notranslate"><span class="pre">mesh_delta_coeff</span></code>
+abundance due to nuclear burning <a class="footnote-reference brackets" href="#f2" id="id2">2</a>. The <code class="docutils literal notranslate"><span class="pre">mesh_delta_coeff</span></code>
 ensures that models have enough mesh points for GYRE to resolve
-pulsation wavefunctions <a class="footnote-reference brackets" href="#f2" id="id2">2</a>.</p>
+pulsation wavefunctions <a class="footnote-reference brackets" href="#f3" id="id3">3</a>.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   
   ! Convective mixing
 
@@ -437,12 +438,21 @@ what we’d expect for <span class="math notranslate nohighlight">\(\beta\)</spa
 <p class="rubric">Footnotes</p>
 <dl class="footnote brackets">
 <dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>When using this <code class="docutils literal notranslate"><span class="pre">./star</span></code> trick, you can’t do restarts
+using the <code class="docutils literal notranslate"><span class="pre">./re</span></code> script. Instead, you should chose which
+photo in the <code class="docutils literal notranslate"><span class="pre">photos</span></code> subdirectory you want to restart
+from; copy this into the working directory with the name
+<code class="docutils literal notranslate"><span class="pre">restart_photo</span></code>; and then run <code class="docutils literal notranslate"><span class="pre">./star</span></code> as before. If you
+then want to <em>stop</em> doing restarts, simply delete
+<code class="docutils literal notranslate"><span class="pre">restart_photo</span></code>.</p>
+</dd>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
 <dd><p>Without these settings, MESA tends to gallop off near the end
 of the main sequence, and doesn’t properly resolve the ‘Henyey hook’
 in the Hertzsprung-Russell diagram where massive stars briefly evolve
 to the blue.</p>
 </dd>
-<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
 <dd><p>GYRE is able to do remeshing itself, but we’re not going to
 use that particular functionality.</p>
 </dd>
@@ -470,7 +480,7 @@ use that particular functionality.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Rich Townsend
+        &copy; Copyright 2019, Rich Townsend, Alina Istrate &amp; Anne Thoul
 
     </p>
   </div>
