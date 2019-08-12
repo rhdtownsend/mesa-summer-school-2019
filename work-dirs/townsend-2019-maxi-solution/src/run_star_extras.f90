@@ -344,7 +344,7 @@ contains
 
       if (md%n_pg == 1) then
          period_f = 1. / (3600.*REAL(md%freq('HZ')))
-         growth_f = 2.*PI*AIMAG(md%freq('HZ'))
+         growth_f = 2.*PI*AIMAG(md%freq('HZ')) * secyer
       end if
 
       ! If this is the F mode, store the displacement wavefunction and
@@ -372,7 +372,7 @@ contains
 
       if (md%n_pg == 2) then
          period_1o = 1. / (3600.*REAL(md%freq('HZ')))
-         growth_1o = 2.*PI*AIMAG(md%freq('HZ'))
+         growth_1o = 2.*PI*AIMAG(md%freq('HZ')) * secyer
       end if
 
       ! If this is the 1-O mode, store the displacement wavefunction
