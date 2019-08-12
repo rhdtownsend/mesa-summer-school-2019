@@ -172,13 +172,14 @@
 using PGstar. This will involve first adding the periods to MESA’s
 history output; and then modifying <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> to set up
 the plots. As the very first step, make a copy of your working
-directory from MiniLab 1 (with all the changes you have made):</p>
+directory from <a class="reference internal" href="minilab-1.html#minilab-1"><span class="std std-ref">MiniLab 1</span></a> (with all the changes you have made):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cp -a townsend-2019-mini-1 townsend-2019-mini-2
 <span class="gp">$</span> <span class="nb">cd</span> townsend-2019-mini-2
 </pre></div>
 </div>
-<p>Alternatively, if you were unable to get things working with MiniLab
-1, then you can grab a working directory for MiniLab 2 from <a class="reference external" href="http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-2.tar.gz">here</a>.</p>
+<p>Alternatively, if you were unable to get things working with
+<a class="reference internal" href="minilab-1.html#minilab-1"><span class="std std-ref">MiniLab 1</span></a>, then you can grab a working directory
+for MiniLab 2 from <a class="reference external" href="http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-2.tar.gz">here</a>.</p>
 </div>
 <div class="section" id="adding-periods-to-history-output">
 <h2>Adding Periods to History Output<a class="headerlink" href="#adding-periods-to-history-output" title="Permalink to this headline">¶</a></h2>
@@ -228,12 +229,13 @@ these data:</p>
 </pre></div>
 </div>
 <p>Here, <code class="docutils literal notranslate"><span class="pre">md%n_pg</span></code> is a simple integer variable containing the radial
-order; while <code class="docutils literal notranslate"><span class="pre">md%freq(...)</span></code> is a function that returns the mode
-frequency in the desired units (in this case, Hertz). The
-<code class="docutils literal notranslate"><span class="pre">REAL(...)</span></code> wrapper is required because <code class="docutils literal notranslate"><span class="pre">md%freq(...)</span></code> returns a
-complex value, with the real part containing the frequency and the
-imaginary part containing the growth rate (more of that later in the
-<a class="reference internal" href="maxilab.html#maxilab"><span class="std std-ref">MaxiLab</span></a>, when we consider non-adiabatic pulsations).</p>
+order (which equals 1 for the F mode; 2 for the 1-O mode; and so on);
+while <code class="docutils literal notranslate"><span class="pre">md%freq(...)</span></code> is a function that returns the mode frequency
+in the desired units (in this case, Hertz). The <code class="docutils literal notranslate"><span class="pre">REAL(...)</span></code> wrapper
+is required because <code class="docutils literal notranslate"><span class="pre">md%freq(...)</span></code> returns a complex value, with the
+real part containing the frequency and the imaginary part containing
+the growth rate (more of that later in the <a class="reference internal" href="maxilab.html#maxilab"><span class="std std-ref">MaxiLab</span></a>,
+when we consider non-adiabatic pulsations).</p>
 <p>With these points in mind, we can set <code class="docutils literal notranslate"><span class="pre">period_f</span></code> to the
 F-mode period <em>in hours</em> by adding the following highlighted
 code to the <code class="docutils literal notranslate"><span class="pre">process_mode</span></code> subroutine:</p>
@@ -251,8 +253,8 @@ code to the <code class="docutils literal notranslate"><span class="pre">process
 </div>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>Add further code to <code class="docutils literal notranslate"><span class="pre">process_mode</span></code>, to store the period
-of the 1-O mode into <code class="docutils literal notranslate"><span class="pre">period_1o</span></code>.</p>
+<p>Add further code to <code class="docutils literal notranslate"><span class="pre">process_mode</span></code>, to store the 1-O mode period
+in hours into <code class="docutils literal notranslate"><span class="pre">period_1o</span></code>.</p>
 </div>
 </div>
 <div class="section" id="adding-history-columns">
@@ -306,6 +308,7 @@ flag:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> less -S LOGS/history.data
 </pre></div>
 </div>
+<p>(Use the left/right cursors key to scan through the columns).</p>
 </div>
 <div class="section" id="plotting-the-periods">
 <h2>Plotting the Periods<a class="headerlink" href="#plotting-the-periods" title="Permalink to this headline">¶</a></h2>
@@ -338,7 +341,7 @@ code at the bottom:</p>
 </span><span class="hll"><span class="n">History_Panels1_other_ymin</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
 </span></pre></div>
 </div>
-<p>(Here, the first line indicate where in the existing grid layout to
+<p>(Here, the first line indicates where in the existing grid layout to
 place the history panel; the subsequent lines specify what to plot in
 the panel).</p>
 <p>Now re-run the ZAMS-to-TAMS evolution, and consider the following questions:</p>
@@ -354,10 +357,10 @@ an almost-fixed multiple of the F mode?</p></li>
 <p class="admonition-title"><em>Optional</em> Exercise</p>
 <p>In addition to printing periods to the terminal, it’s often useful
 to display them in the PGstar window. Modifiy
-<code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> to set <code class="docutils literal notranslate"><span class="pre">Text_Summary1_name(1,4)</span></code> (the
-first item in the fourth column of the text area) to
-<code class="docutils literal notranslate"><span class="pre">'period_f'</span></code>. Make a similar modifications to add <code class="docutils literal notranslate"><span class="pre">period_1o</span></code> as
-the second item.</p>
+<code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> to set <code class="docutils literal notranslate"><span class="pre">Text_Summary1_name(1,4)</span></code> (i.e.,
+the first item in the fourth column of the text area) to
+<code class="docutils literal notranslate"><span class="pre">'period_f'</span></code>. Make a similar modifications to add <code class="docutils literal notranslate"><span class="pre">period_1o</span></code>
+as the second item.</p>
 </div>
 </div>
 <div class="section" id="quantifying-the-period-scaling">

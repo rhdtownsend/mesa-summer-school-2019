@@ -1,4 +1,4 @@
-.. highlight:: none
+.. _minilab-1:
 
 **********************
 MiniLab 1: First Steps
@@ -59,7 +59,10 @@ specify the master inlist on the command line:
 
 During the runs a single PGstar window will display various plots in a
 grid layout. We'll be adding to these plots during the MiniLabs and
-Maxilab.
+Maxilab. If the plots are difficult to read on your computer, and/or
+the window doesn't fit on your screen properly, consider customizing
+the ``Grid1_win_width`` and ``Grid1_win_aspect_ratio`` parameters in
+the ``inlist_to_zams_pgstar`` and ``inlist_to_tams_pgstar`` files.
 
 To get an idea of what settings we're using for these calculations,
 take a look inside ``inlist_to_tams_project``, which contains the
@@ -282,12 +285,11 @@ As the run proceeds, you should be able to see terminal output that looks simila
 
     Found mode: radial order, frequency =            1   8.5707910250840724E-005
     Found mode: radial order, frequency =            2   1.1184917524623201E-004
-    Found mode: radial order, frequency =            3   1.4533556943814664E-004
 
 This confirms that GYRE is being run, and that radial modes (in this
-case, the fundamental and first two overtones) are being found. The
-periods of the modes are of the order :math:`10^{4}\,{\rm s}`, just
-what we'd expect for :math:`\beta` Cephei stars.
+case, the fundamental and first overtone) are being found. The periods
+of the modes are of the order :math:`10^{4}\,{\rm s}`, just what we'd
+expect for :math:`\beta` Cephei stars.
 
 .. rubric:: Footnotes
 
@@ -296,7 +298,7 @@ what we'd expect for :math:`\beta` Cephei stars.
 	 photo in the ``photos`` subdirectory you want to restart
 	 from; copy this into the working directory with the name
 	 ``restart_photo``; and then run ``./star`` as before. If you
-	 then want to *stop* doing restarts, simply delete
+	 later want to *stop* doing restarts, simply delete
 	 ``restart_photo``.
 
 .. [#f2] Without these settings, MESA tends to gallop off near the end

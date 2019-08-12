@@ -21,15 +21,16 @@ non-adiabatic calculations to stars with other masses, we will map out
 the :math:`\beta` Cephei instability strip.
 
 As the very first step, make a copy of your working directory from
-MiniLab 3 (with all the changes you have made):
+:ref:`MiniLab 3 <minilab-3>` (with all the changes you have made):
 
 .. code-block:: console
 
    $ cp -a townsend-2019-mini-3 townsend-2019-maxi
    $ cd townsend-2019-maxi
 
-Alternatively, if you were unable to get things working with MiniLab
-3, then you can grab a working directory for the MaxiLab from `here
+Alternatively, if you were unable to get things working with
+:ref:`MiniLab 3 <minilab-3>`, then you can grab a working directory
+for the MaxiLab from `here
 <http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-maxi.tar.gz>`__.
 
 Enabling Non-Adiabatic Effects
@@ -47,10 +48,11 @@ the following highlighted code to ``gyre.in``:
    /
 	
 If you repeat the ZAMS-to-TAMS evolution with this modification,
-things will appear largely unchanged from MiniLab 3; that's because,
-as mentioned above, the mode periods are scarcely affected by thermal
-exchanges. However, a big difference from previous runs is that the
-mode frequencies calculated by GYRE are now complex quantities.
+things will appear largely unchanged from :ref:`MiniLab 3
+<minilab-3>`; that's because, as mentioned above, the mode periods are
+scarcely affected by thermal exchanges. However, a big difference from
+previous runs is that the mode frequencies calculated by GYRE are now
+complex quantities.
 
 Printing Growth/Decay Rates
 ---------------------------
@@ -196,9 +198,9 @@ toward driving the mode, while regions with :math:`{\rm d}W/{\rm d}x <
 Plotting the Differential Work
 ------------------------------
 
-To view the fruits of our labor, let's now add a final profile panel to show
-the differential work data. Open up ``inlist_to_tams_pgstar``, and add the following highlighted
-code at the bottom:
+To view the fruits of our labor, let's now add a final profile panel
+to show the differential work data. Open up ``inlist_to_tams_pgstar``,
+and add the following highlighted code at the bottom:
 
 .. code-block:: fortran
   :emphasize-lines: 1-
@@ -222,9 +224,8 @@ regions. Also, we create separate plots for the F and 1-O modes).
 
 .. admonition:: Exercise
 
-   Further edit ``inlist_to_tams_pgstar`` to add ``log_opacity`` (the
-   logarithm of the opacity) to the right-hand axes of the
-   differential work plots.
+   Further edit ``inlist_to_tams_pgstar`` to add the logarithm of the
+   opacity to the right-hand axes of the differential work plots.
 
 With these changes, repeat the ZAMS-to-TAMS run, and think about the
 following questions:
@@ -274,12 +275,12 @@ Mapping the Instability Strip
 
 As the final part of the MaxiLab, we're going to use GYRE and MESA to
 map out the extent of the :math:`\beta` Cephei instability strip for
-radial modes. This will involve repeating the ZAMS-to-TAMS evolution
-for a range of different stellar masses, and noting where the F and
-1-O radial modes transition from stable to unstable (and vice
-versa). To speed things up, we'll crowd-source the calculations: each
-student will focus on a single stellar mass, and record their results
-in a shared online spreadsheet.
+radial modes. This will involve repeating the evolution for a range of
+different stellar masses, and noting where the F and 1-O radial modes
+transition from stable to unstable (and vice versa). To speed things
+up, we'll crowd-source the calculations: each student will focus on a
+single stellar mass, and record their results in a shared online
+spreadsheet.
 
 If you haven't had any luck in getting the first part of the MaxiLab
 working, then you can grab the solution from `here
@@ -308,7 +309,7 @@ strip boundaries.
 
 .. admonition:: Exercise
 
-   Modify ``inlist_to_AM's_project`` and ``inlist_to_tams_project`` in
+   Modify ``inlist_to_zams_project`` and ``inlist_to_tams_project`` in
    your working directory, to set the initial stellar mass to your
    assigned value. Then, repeat the pre-main sequence to ZAMS run
    (don't forget to do this!), followed by the ZAMS-to-TAMS
@@ -357,4 +358,3 @@ instability strip changes for different :math:`Z`.
 
 During these calculations, be sure to look for changes in the
 iron-bump opacity peak resulting from the reduced metallicity.
- 

@@ -166,7 +166,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="minilab-1-first-steps">
-<h1>MiniLab 1: First Steps<a class="headerlink" href="#minilab-1-first-steps" title="Permalink to this headline">¶</a></h1>
+<span id="minilab-1"></span><h1>MiniLab 1: First Steps<a class="headerlink" href="#minilab-1-first-steps" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>In MiniLab 1, we’ll create a model for a typical <span class="math notranslate nohighlight">\(\beta\)</span> Cephei
@@ -211,11 +211,14 @@ specify the master inlist on the command line:</p>
 </div>
 <p>During the runs a single PGstar window will display various plots in a
 grid layout. We’ll be adding to these plots during the MiniLabs and
-Maxilab.</p>
+Maxilab. If the plots are difficult to read on your computer, and/or
+the window doesn’t fit on your screen properly, consider customizing
+the <code class="docutils literal notranslate"><span class="pre">Grid1_win_width</span></code> and <code class="docutils literal notranslate"><span class="pre">Grid1_win_aspect_ratio</span></code> parameters in
+the <code class="docutils literal notranslate"><span class="pre">inlist_to_zams_pgstar</span></code> and <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> files.</p>
 <p>To get an idea of what settings we’re using for these calculations,
 take a look inside <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_project</span></code>, which contains the
 important parts of the ZAMS-to-TAMS run. Here are a few excerpts:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
   ! Mass &amp; metalicity
 
   initial_mass = 15.
@@ -229,7 +232,7 @@ important parts of the ZAMS-to-TAMS run. Here are a few excerpts:</p>
 and choose helium and metal mass fractions corresponding to the
 <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2009ARA%26A..47..481A/abstract">Asplund et al. (2009)</a> proto-solar
 abundances.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
   ! Grid and timestep
    
   mesh_delta_coeff = 0.5
@@ -249,7 +252,7 @@ an upper limit on the logarithmic change in the central hydrogen
 abundance due to nuclear burning <a class="footnote-reference brackets" href="#f2" id="id2">2</a>. The <code class="docutils literal notranslate"><span class="pre">mesh_delta_coeff</span></code>
 ensures that models have enough mesh points for GYRE to resolve
 pulsation wavefunctions <a class="footnote-reference brackets" href="#f3" id="id3">3</a>.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   
   ! Convective mixing
 
   mixing_length_alpha = 1.8d0
@@ -429,13 +432,12 @@ ZAMS-to-TAMS evolution. You’re now ready to go ahead and run the code:</p>
 <p>As the run proceeds, you should be able to see terminal output that looks similar to this:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Found mode: radial order, frequency =            1   8.5707910250840724E-005</span>
 <span class="go">Found mode: radial order, frequency =            2   1.1184917524623201E-004</span>
-<span class="go">Found mode: radial order, frequency =            3   1.4533556943814664E-004</span>
 </pre></div>
 </div>
 <p>This confirms that GYRE is being run, and that radial modes (in this
-case, the fundamental and first two overtones) are being found. The
-periods of the modes are of the order <span class="math notranslate nohighlight">\(10^{4}\,{\rm s}\)</span>, just
-what we’d expect for <span class="math notranslate nohighlight">\(\beta\)</span> Cephei stars.</p>
+case, the fundamental and first overtone) are being found. The periods
+of the modes are of the order <span class="math notranslate nohighlight">\(10^{4}\,{\rm s}\)</span>, just what we’d
+expect for <span class="math notranslate nohighlight">\(\beta\)</span> Cephei stars.</p>
 <p class="rubric">Footnotes</p>
 <dl class="footnote brackets">
 <dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
@@ -444,7 +446,7 @@ using the <code class="docutils literal notranslate"><span class="pre">./re</spa
 photo in the <code class="docutils literal notranslate"><span class="pre">photos</span></code> subdirectory you want to restart
 from; copy this into the working directory with the name
 <code class="docutils literal notranslate"><span class="pre">restart_photo</span></code>; and then run <code class="docutils literal notranslate"><span class="pre">./star</span></code> as before. If you
-then want to <em>stop</em> doing restarts, simply delete
+later want to <em>stop</em> doing restarts, simply delete
 <code class="docutils literal notranslate"><span class="pre">restart_photo</span></code>.</p>
 </dd>
 <dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>

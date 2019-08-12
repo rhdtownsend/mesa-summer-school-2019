@@ -7,23 +7,25 @@ MiniLab 3: Plotting Wavefunctions
 Overview
 ========
 
-In :ref:`MiniLab 2 <minilab-2>`, we found that the periods of the fundamental and
-first-overtone radial modes scale approximately with the dynamical
-timescale, :math:`P \propto \tau_{\rm dyn}`. In MiniLab 3, we're going
-to examine the mode radial displacement wavefunctions :math:`\xi_{r}`,
-which set the constant of proportionality in this scaling. The steps
-are similar to before: first we'll add the :math:`\xi_{r}` data to
-MESA's profile output, and then modify ``inlist_to_tams_pgstar`` to
-plot these wavefunctions. As the very first step, make a copy of your
-working directory from MiniLab 2 (with all the changes you have made):
+In :ref:`MiniLab 2 <minilab-2>`, we found that the periods of the
+fundamental and first-overtone radial modes scale approximately with
+the dynamical timescale, :math:`P \propto \tau_{\rm dyn}`. In MiniLab
+3, we're going to examine the mode radial displacement wavefunctions
+:math:`\xi_{r}`, which ultimately determine the constant of
+proportionality in this scaling. The steps are similar to before:
+first we'll add the :math:`\xi_{r}` data to MESA's profile output, and
+then modify ``inlist_to_tams_pgstar`` to plot these wavefunctions. As
+the very first step, make a copy of your working directory from
+:ref:`MiniLab 2 <minilab-2>` (with all the changes you have made):
 
 .. code-block:: console
 
    $ cp -a townsend-2019-mini-2 townsend-2019-mini-3
    $ cd townsend-2019-mini-3
 
-Alternatively, if you were unable to get things working with MiniLab
-2, then you can grab a working directory for MiniLab 3 from `here
+Alternatively, if you were unable to get things working with
+:ref:`MiniLab 2 <minilab-2>`, then you can grab a working directory
+for MiniLab 3 from `here
 <http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-3.tar.gz>`__.
 
 Adding Wavefunctions to Profile Output
@@ -108,7 +110,10 @@ In this code, we first deallocate ``xi_r_f`` (if currently allocated),
 and then allocate it at the correct size (``md%n_k`` is the number of
 grid points). Following that, we loop over the grid index ``k``,
 storing values in the ``xi_r_f`` array. . As a final step, we reverse
-the order of elements in this array.
+the order of elements in this array (the strange-looking expression
+``xi_r_f(md%n_k:1:-1)`` uses Fortran's array-slice notation to access
+the elements of ``xi_r_f`` from the last to the first, in increments
+of ``-1``).
 
 .. admonition:: Exercise
       
@@ -192,9 +197,16 @@ arrays.
      GYRE has been run.
 
    - modify ``data_for_extra_profile_columns`` to call ``run_gyre`` if
-     ``gyre_has_run`` is ``.false.``.
+     ``gyre_has_run`` is ``.false.``. To perform the check on
+     ``gyre_has_run``, you can use a conditional block like this:
 
-   Be sure to check that these changes fix the crash.
+     .. code-block:: fortran
+	
+        if (.NOT. gyre_has_run) then
+	   ...
+        endif
+
+Be sure to check that these changes fix the crash.
 
 Plotting the Wavefunctions
 ==========================
@@ -221,14 +233,20 @@ code at the bottom:
   Profile_Panels1_yaxis_name(1) = 'xi_r_f'
   Profile_Panels1_other_yaxis_name(1) = 'xi_r_1o'
 
-(Here, the ''logxq'' choice for the x-axis uses the quantity
+(Here, the ``logxq`` choice for the x-axis uses the quantity
 :math:`\log(1-m/M)`, which nicely emphasizes the outer parts of the
 star).
 
 Looking at the wavefunctions, we can clearly see the key difference
-between the radial and first-overtone modes: the latter changes sign
-somewhere between the center and the surface, while the former does
-not. This sign change means that the effective wavelength of the first
-overtone is shorter --- and hence, its frequency is higher, and its
-period shorter.
+between the radial and first-overtone modes: the latter has a node
+(:math:`\xi_{r} = 0`) somewhere between the center and the surface,
+while the former does not. This sign change means that the effective
+wavelength of the first overtone is shorter --- and hence, its
+frequency is higher, and its period shorter.
 
+As an aside: the radial displacement wavefunctions are in units of the
+stellar radius :math:`R`. Reading off the plots, it would seem that
+the radial displacement at the stellar surface is tens or even
+hundreds times :math:`R`. This shouldn't alarm you; GYRE is a *linear*
+oscillation code, and therefore its wavefunctions have an arbitrary
+scaling.

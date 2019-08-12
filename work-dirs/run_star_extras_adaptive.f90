@@ -46,6 +46,10 @@ module run_star_extras
 
   logical, save :: gyre_has_run
 
+  ! Flag to indicate if previous model was unstable
+
+  logical, save :: is_unstable_prev
+
 contains
 
   subroutine extras_controls(id, ierr)
@@ -107,6 +111,10 @@ contains
     call gyre_set_constant('R_SUN', rsol)
     call gyre_set_constant('L_SUN', lsol)
 
+    ! Initialize is_unstable_prev
+
+    is_unstable_prev = .FALSE.
+
     ! Set return value
 
     extras_startup = 0
@@ -146,6 +154,7 @@ contains
     integer :: ierr
 
     type (star_info), pointer :: s
+    logical :: is_unstable
 
     ierr = 0
 
@@ -154,13 +163,35 @@ contains
 
     ! >>> Insert additional code below
 
-    if (s%x_logical_ctrl(1)) then
-       call run_gyre(id, ierr)
-    endif
-
-    ! Set return value
-
     extras_check_model = keep_going
+
+    if (s%x_logical_ctrl(1)) then
+
+       call run_gyre(id, ierr)
+
+       ! See if a transition from stable to unstable has occurred
+
+       is_unstable = growth_f > 0. .OR. growth_1o > 0.
+
+       if (is_unstable .NEQV. is_unstable_prev) then
+
+          ! If so, and the timestep is greater than 1,000 years, and
+          ! this is not the first step, reduce the timestep and retry
+
+          if (s%dt > 1E3*secyer .AND. s%model_number > 1) then
+
+             s%dt = 0.9*s%dt
+             extras_check_model = retry
+
+          else
+
+             is_unstable_prev = is_unstable
+
+          endif
+
+       endif
+
+    endif
 
   end function extras_check_model
 

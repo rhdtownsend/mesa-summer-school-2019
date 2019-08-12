@@ -168,21 +168,23 @@
 <span id="minilab-3"></span><h1>MiniLab 3: Plotting Wavefunctions<a class="headerlink" href="#minilab-3-plotting-wavefunctions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>In <a class="reference internal" href="minilab-2.html#minilab-2"><span class="std std-ref">MiniLab 2</span></a>, we found that the periods of the fundamental and
-first-overtone radial modes scale approximately with the dynamical
-timescale, <span class="math notranslate nohighlight">\(P \propto \tau_{\rm dyn}\)</span>. In MiniLab 3, we’re going
-to examine the mode radial displacement wavefunctions <span class="math notranslate nohighlight">\(\xi_{r}\)</span>,
-which set the constant of proportionality in this scaling. The steps
-are similar to before: first we’ll add the <span class="math notranslate nohighlight">\(\xi_{r}\)</span> data to
-MESA’s profile output, and then modify <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> to
-plot these wavefunctions. As the very first step, make a copy of your
-working directory from MiniLab 2 (with all the changes you have made):</p>
+<p>In <a class="reference internal" href="minilab-2.html#minilab-2"><span class="std std-ref">MiniLab 2</span></a>, we found that the periods of the
+fundamental and first-overtone radial modes scale approximately with
+the dynamical timescale, <span class="math notranslate nohighlight">\(P \propto \tau_{\rm dyn}\)</span>. In MiniLab
+3, we’re going to examine the mode radial displacement wavefunctions
+<span class="math notranslate nohighlight">\(\xi_{r}\)</span>, which ultimately determine the constant of
+proportionality in this scaling. The steps are similar to before:
+first we’ll add the <span class="math notranslate nohighlight">\(\xi_{r}\)</span> data to MESA’s profile output, and
+then modify <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> to plot these wavefunctions. As
+the very first step, make a copy of your working directory from
+<a class="reference internal" href="minilab-2.html#minilab-2"><span class="std std-ref">MiniLab 2</span></a> (with all the changes you have made):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cp -a townsend-2019-mini-2 townsend-2019-mini-3
 <span class="gp">$</span> <span class="nb">cd</span> townsend-2019-mini-3
 </pre></div>
 </div>
-<p>Alternatively, if you were unable to get things working with MiniLab
-2, then you can grab a working directory for MiniLab 3 from <a class="reference external" href="http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-3.tar.gz">here</a>.</p>
+<p>Alternatively, if you were unable to get things working with
+<a class="reference internal" href="minilab-2.html#minilab-2"><span class="std std-ref">MiniLab 2</span></a>, then you can grab a working directory
+for MiniLab 3 from <a class="reference external" href="http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-3.tar.gz">here</a>.</p>
 </div>
 <div class="section" id="adding-wavefunctions-to-profile-output">
 <h2>Adding Wavefunctions to Profile Output<a class="headerlink" href="#adding-wavefunctions-to-profile-output" title="Permalink to this headline">¶</a></h2>
@@ -254,7 +256,10 @@ integer variable <code class="docutils literal notranslate"><span class="pre">k<
 and then allocate it at the correct size (<code class="docutils literal notranslate"><span class="pre">md%n_k</span></code> is the number of
 grid points). Following that, we loop over the grid index <code class="docutils literal notranslate"><span class="pre">k</span></code>,
 storing values in the <code class="docutils literal notranslate"><span class="pre">xi_r_f</span></code> array. . As a final step, we reverse
-the order of elements in this array.</p>
+the order of elements in this array (the strange-looking expression
+<code class="docutils literal notranslate"><span class="pre">xi_r_f(md%n_k:1:-1)</span></code> uses Fortran’s array-slice notation to access
+the elements of <code class="docutils literal notranslate"><span class="pre">xi_r_f</span></code> from the last to the first, in increments
+of <code class="docutils literal notranslate"><span class="pre">-1</span></code>).</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p>Add further code to <code class="docutils literal notranslate"><span class="pre">process_mode</span></code>, to store the radial
@@ -320,16 +325,23 @@ arrays.</p>
 <p>Add a new module variable to <code class="docutils literal notranslate"><span class="pre">run_star_extras.f90</span></code> (see
 <a class="reference internal" href="minilab-2.html#minilab-2-mod-vars"><span class="std std-ref">here</span></a> for a reminder of how to do this),
 with name <code class="docutils literal notranslate"><span class="pre">gyre_has_run</span></code> and type <code class="docutils literal notranslate"><span class="pre">logical</span></code>. Then</p>
-<ul class="simple">
+<ul>
 <li><p>modify <code class="docutils literal notranslate"><span class="pre">extras_start_step</span></code> to initialize <code class="docutils literal notranslate"><span class="pre">gyre_has_run</span></code> to
 <code class="docutils literal notranslate"><span class="pre">.false.</span></code> at the beginning of each step.</p></li>
 <li><p>modify <code class="docutils literal notranslate"><span class="pre">run_gyre</span></code> to set <code class="docutils literal notranslate"><span class="pre">gyre_has_run</span></code> to <code class="docutils literal notranslate"><span class="pre">.true.</span></code> after
 GYRE has been run.</p></li>
 <li><p>modify <code class="docutils literal notranslate"><span class="pre">data_for_extra_profile_columns</span></code> to call <code class="docutils literal notranslate"><span class="pre">run_gyre</span></code> if
-<code class="docutils literal notranslate"><span class="pre">gyre_has_run</span></code> is <code class="docutils literal notranslate"><span class="pre">.false.</span></code>.</p></li>
-</ul>
-<p>Be sure to check that these changes fix the crash.</p>
+<code class="docutils literal notranslate"><span class="pre">gyre_has_run</span></code> is <code class="docutils literal notranslate"><span class="pre">.false.</span></code>. To perform the check on
+<code class="docutils literal notranslate"><span class="pre">gyre_has_run</span></code>, you can use a conditional block like this:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(.</span><span class="nb">NOT</span><span class="p">.</span> <span class="n">gyre_has_run</span><span class="p">)</span> <span class="k">then</span>
+   <span class="p">...</span>
+<span class="n">endif</span>
+</pre></div>
 </div>
+</li>
+</ul>
+</div>
+<p>Be sure to check that these changes fix the crash.</p>
 </div>
 <div class="section" id="plotting-the-wavefunctions">
 <h2>Plotting the Wavefunctions<a class="headerlink" href="#plotting-the-wavefunctions" title="Permalink to this headline">¶</a></h2>
@@ -351,15 +363,21 @@ code at the bottom:</p>
 </span><span class="hll"><span class="n">Profile_Panels1_other_yaxis_name</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;xi_r_1o&#39;</span>
 </span></pre></div>
 </div>
-<p>(Here, the ‘’logxq’’ choice for the x-axis uses the quantity
+<p>(Here, the <code class="docutils literal notranslate"><span class="pre">logxq</span></code> choice for the x-axis uses the quantity
 <span class="math notranslate nohighlight">\(\log(1-m/M)\)</span>, which nicely emphasizes the outer parts of the
 star).</p>
 <p>Looking at the wavefunctions, we can clearly see the key difference
-between the radial and first-overtone modes: the latter changes sign
-somewhere between the center and the surface, while the former does
-not. This sign change means that the effective wavelength of the first
-overtone is shorter — and hence, its frequency is higher, and its
-period shorter.</p>
+between the radial and first-overtone modes: the latter has a node
+(<span class="math notranslate nohighlight">\(\xi_{r} = 0\)</span>) somewhere between the center and the surface,
+while the former does not. This sign change means that the effective
+wavelength of the first overtone is shorter — and hence, its
+frequency is higher, and its period shorter.</p>
+<p>As an aside: the radial displacement wavefunctions are in units of the
+stellar radius <span class="math notranslate nohighlight">\(R\)</span>. Reading off the plots, it would seem that
+the radial displacement at the stellar surface is tens or even
+hundreds times <span class="math notranslate nohighlight">\(R\)</span>. This shouldn’t alarm you; GYRE is a <em>linear</em>
+oscillation code, and therefore its wavefunctions have an arbitrary
+scaling.</p>
 </div>
 </div>
 

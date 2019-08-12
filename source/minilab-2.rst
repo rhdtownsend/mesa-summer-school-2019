@@ -11,15 +11,16 @@ In Minilab 2, we'll take mode periods calculated by GYRE and plot them
 using PGstar. This will involve first adding the periods to MESA's
 history output; and then modifying ``inlist_to_tams_pgstar`` to set up
 the plots. As the very first step, make a copy of your working
-directory from MiniLab 1 (with all the changes you have made):
+directory from :ref:`MiniLab 1 <minilab-1>` (with all the changes you have made):
 
 .. code-block:: console
 
    $ cp -a townsend-2019-mini-1 townsend-2019-mini-2
    $ cd townsend-2019-mini-2
 
-Alternatively, if you were unable to get things working with MiniLab
-1, then you can grab a working directory for MiniLab 2 from `here
+Alternatively, if you were unable to get things working with
+:ref:`MiniLab 1 <minilab-1>`, then you can grab a working directory
+for MiniLab 2 from `here
 <http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-mini-2.tar.gz>`__.
 
 Adding Periods to History Output
@@ -83,12 +84,13 @@ these data:
            md%n_pg, REAL(md%freq('HZ'))
 
 Here, ``md%n_pg`` is a simple integer variable containing the radial
-order; while ``md%freq(...)`` is a function that returns the mode
-frequency in the desired units (in this case, Hertz). The
-``REAL(...)`` wrapper is required because ``md%freq(...)`` returns a
-complex value, with the real part containing the frequency and the
-imaginary part containing the growth rate (more of that later in the
-:ref:`MaxiLab <maxilab>`, when we consider non-adiabatic pulsations).
+order (which equals 1 for the F mode; 2 for the 1-O mode; and so on);
+while ``md%freq(...)`` is a function that returns the mode frequency
+in the desired units (in this case, Hertz). The ``REAL(...)`` wrapper
+is required because ``md%freq(...)`` returns a complex value, with the
+real part containing the frequency and the imaginary part containing
+the growth rate (more of that later in the :ref:`MaxiLab <maxilab>`,
+when we consider non-adiabatic pulsations).
 
 With these points in mind, we can set ``period_f`` to the
 F-mode period *in hours* by adding the following highlighted
@@ -110,8 +112,8 @@ code to the ``process_mode`` subroutine:
 
 .. admonition:: Exercise
       
-   Add further code to ``process_mode``, to store the period
-   of the 1-O mode into ``period_1o``.
+   Add further code to ``process_mode``, to store the 1-O mode period
+   in hours into ``period_1o``.
 
 .. _minilab-2-add-hist-cols:
    
@@ -177,6 +179,8 @@ flag:
 
    $ less -S LOGS/history.data
 
+(Use the left/right cursors key to scan through the columns).
+
 Plotting the Periods
 ====================
 
@@ -213,7 +217,7 @@ code at the bottom:
   History_Panels1_other_yaxis_name(2) = ''
   History_Panels1_other_ymin(2) = 0
 
-(Here, the first line indicate where in the existing grid layout to
+(Here, the first line indicates where in the existing grid layout to
 place the history panel; the subsequent lines specify what to plot in
 the panel).
   
@@ -229,10 +233,10 @@ Now re-run the ZAMS-to-TAMS evolution, and consider the following questions:
 
    In addition to printing periods to the terminal, it's often useful
    to display them in the PGstar window. Modifiy
-   ``inlist_to_tams_pgstar`` to set ``Text_Summary1_name(1,4)`` (the
-   first item in the fourth column of the text area) to
-   ``'period_f'``. Make a similar modifications to add ``period_1o`` as
-   the second item.
+   ``inlist_to_tams_pgstar`` to set ``Text_Summary1_name(1,4)`` (i.e.,
+   the first item in the fourth column of the text area) to
+   ``'period_f'``. Make a similar modifications to add ``period_1o``
+   as the second item.
 
 Quantifying the Period Scaling
 ==============================
