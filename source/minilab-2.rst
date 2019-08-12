@@ -193,9 +193,12 @@ code at the bottom:
 
   ! >>> Insert additional parameters below
 
+  ! History panel showing periods
+
   Grid1_plot_name(5) = 'History_Panels1'
 
   History_Panels1_num_panels = 2
+  History_Panels1_title = 'Periods'
 
   History_Panels1_xaxis_name = 'star_age'
   History_Panels1_max_width = 0
@@ -221,6 +224,15 @@ Now re-run the ZAMS-to-TAMS evolution, and consider the following questions:
 
   - Why do the mode periods move in lockstep, with the 1-O mode being
     an almost-fixed multiple of the F mode?
+
+.. admonition:: *Optional* Exercise
+
+   In addition to printing periods to the terminal, it's often useful
+   to display them in the PGstar window. Modifiy
+   ``inlist_to_tams_pgstar`` to set ``Text_Summary1_name(1,4)`` (the
+   first item in the fourth column of the text area) to
+   ``'period_f'``. Make a similar modifications to add ``period_1o`` as
+   the second item.
 
 Quantifying the Period Scaling
 ==============================
@@ -251,3 +263,8 @@ evolves toward the TAMS is driven mostly by the :math:`\tau_{\rm dyn}`
 increase, which in turn is driven by the expansion of the star. The
 brief reversal in this behavior, near the TAMS, is associated with the
 Henyey hook where the star shrinks.
+
+.. admonition:: *Optional* Exercise
+
+   Modifiy ``inlist_to_tams_pgstar`` to add the dynamical timescale to
+   the text area.

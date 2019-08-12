@@ -102,7 +102,11 @@ Adding Growth Rates to History Output
 -------------------------------------
 
 As the next step, we'll add two extra columns to history output, to
-store the growth rates for the F and 1-O modes.
+store the growth rates for the F and 1-O modes. Rather than storing
+the growth rates in units of per second, we'll use per year --- the
+latter is conceptially easier to work with (e.g., a growth rate of
+:math:`3\,{\rm yr}^{-1}` means the pulsation grows by 3 e-foldings
+per year).
 
 .. admonition:: Exercise
 
@@ -113,7 +117,11 @@ store the growth rates for the F and 1-O modes.
    - create two new module variables to store the growth rates (call
      them ``growth_f`` and ``growth_1o``).
 
-   - change the ``process_mode`` callback to store data into these variables.
+   - change the ``process_mode`` callback to store the growth rate in
+     :math:`{\rm yr}^{-1}` into these variables. To get the rate in
+     these units, use ``2.*PI*AIMAG(md%freq('HZ'))*secyer`` (the
+     ``secyer`` constant, from the ``const`` module, gives the number of
+     seconds in a year).
 
    - change the ``how_many_extra_history_columns`` and
      ``data_for_extra_history_columns`` hooks to copy data from these
@@ -175,7 +183,7 @@ toward driving the mode, while regions with :math:`{\rm d}W/{\rm d}x <
    1-O modes to the profile output.  In brief,
 
    - create two new module variables to store the differential work (call
-     them ``work_f`` and ``work_1o``).
+     them ``dW_dx_f`` and ``dW_dx_1o``).
 
    - change the ``process_mode`` callback to store data into these
      variables. (GYRE provides the differential work at the ``k``'th
@@ -188,18 +196,38 @@ toward driving the mode, while regions with :math:`{\rm d}W/{\rm d}x <
 Plotting the Differential Work
 ------------------------------
 
-To view the fruits of our labor, let's now add a profile panel to show
-the differential work data.
+To view the fruits of our labor, let's now add a final profile panel to show
+the differential work data. Open up ``inlist_to_tams_pgstar``, and add the following highlighted
+code at the bottom:
+
+.. code-block:: fortran
+  :emphasize-lines: 1-
+
+  ! Profile panel showing differential work
+
+  Grid1_plot_name(7) = 'Profile_Panels2'
+
+  Profile_Panels2_num_panels = 2
+  Profile_Panels2_title = 'Differential Work'
+
+  Profile_Panels2_xaxis_name = 'logT'
+
+  Profile_Panels2_yaxis_name(1) = 'dW_dx_f'
+
+  Profile_Panels2_yaxis_name(2) = 'dW_dx_1o'
+
+(Unlike the previous profile panel, we now use ``logT`` on the x-axis;
+this allow us to read off the temperature in the driving/damping
+regions. Also, we create separate plots for the F and 1-O modes).
 
 .. admonition:: Exercise
 
-   Edit ``inlist_to_tams_pgstar``, adding a second profile panel that
-   plots the differential work for the two modes. For the x-axis, use
-   ``logT`` instead of ``logxm`` (this allows us to see what the
-   temperature is in the driving/damping regions). On the right-hand
-   axes, plot the log of the opacity.
+   Further edit ``inlist_to_tams_pgstar`` to add ``log_opacity`` (the
+   logarithm of the opacity) to the right-hand axes of the
+   differential work plots.
 
-Repeat the ZAMS-to-TAMS run, and think about the following questions:
+With these changes, repeat the ZAMS-to-TAMS run, and think about the
+following questions:
 
 - Where in the star is the driving strongest?
 
@@ -235,7 +263,7 @@ d}W/{\rm d}x` via
 
 (here, :math:`R` is the stellar radius).
 
- .. admonition:: Optional Exercise
+ .. admonition:: *Optional* Exercise
 
     Modify ``run_star_extras.f90`` to store :math:`{\rm d}W/{\rm d}\ln
     T` instead of :math:`{\rm d}W/{\rm d}x` in the ``work_f`` and
@@ -248,10 +276,16 @@ As the final part of the MaxiLab, we're going to use GYRE and MESA to
 map out the extent of the :math:`\beta` Cephei instability strip for
 radial modes. This will involve repeating the ZAMS-to-TAMS evolution
 for a range of different stellar masses, and noting where the F and
-1-O radial modes transition from stable to unstanble (and vice
+1-O radial modes transition from stable to unstable (and vice
 versa). To speed things up, we'll crowd-source the calculations: each
 student will focus on a single stellar mass, and record their results
 in a shared online spreadsheet.
+
+If you haven't had any luck in getting the first part of the MaxiLab
+working, then you can grab the solution from `here
+<http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/townsend-2019-maxi-solution.tar.gz>`__;
+use this as your working directory for the instability strip
+calculations.
 
 Picking a Mass
 --------------
@@ -274,7 +308,7 @@ strip boundaries.
 
 .. admonition:: Exercise
 
-   Modify ``inlist_to_zams_project`` and ``inlist_to_tams_project`` in
+   Modify ``inlist_to_AM's_project`` and ``inlist_to_tams_project`` in
    your working directory, to set the initial stellar mass to your
    assigned value. Then, repeat the pre-main sequence to ZAMS run
    (don't forget to do this!), followed by the ZAMS-to-TAMS
@@ -285,6 +319,23 @@ strip boundaries.
    ``history.data`` file after the run). Note the corresponding values
    when both modes again become stable. Enter these data in the
    appropriate *Solar Metallicity* columns of the spreadsheet.
+
+For some choices of stellar mass, there can be multiple boundaries; if
+you encounter this situation for your assigned stellar mass, then
+enter the first boundary (where either mode first becomes unstable)
+and last boundary (when both modes become stable) into the
+spreadsheet.
+
+.. admonition:: *Optional* Exercise
+
+   If you're feeling bold, see if you can increase the precision with
+   which the boundaries are determined. One approach is to modify the
+   ``extras_check_model`` hook, to retry the step with a reduced
+   timestep when a transition from stable to unstable (or vice versa)
+   is detected. See `this
+   <http://www.astro.wisc.edu/~townsend/resource/teaching/mesa-summer-school-2019/run_star_extras_adaptive.f90>`__
+   ``run_star_extras.f90`` file for an example implementation of this
+   adaptive timestepping approach.
 
 When all the data are collected, we'll combine them to create a map of
 the instability strip boundaries in the Hertzsprung-Russell diagram.
@@ -303,3 +354,7 @@ instability strip changes for different :math:`Z`.
    of 75% solar (:math:`Z = 0.01065`) and 50% solar (:math:`Z =
    0.0071`). Enter the results in the appropriate columns of the
    spreadsheet.
+
+During these calculations, be sure to look for changes in the
+iron-bump opacity peak resulting from the reduced metallicity.
+ 
