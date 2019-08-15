@@ -245,9 +245,9 @@ The answer to both of the questions above lies in considering the
 response of a star to departures from hydrostatic equilibrium. One of
 the first things we learn in any course on stellar astrophysics is
 that this response occurs on the star's dynamical timescale:
-:math:`\tau_{\rm dyn} = \sqrt{R^{3}/GM}`. Since radial oscillations
-are an example of departures from hydrostatic equilibrium, we should
-therefore expect the oscillation periods :math:`P` to scale
+:math:`\tau_{\rm dyn} = \sqrt{R^{3}/GM}`. Since radial pulsations are
+an example of departures from hydrostatic equilibrium, we should
+therefore expect the pulsation periods :math:`P` to scale
 (approximately) proportionally with :math:`\tau_{\rm dyn}`. Our next
 step is to check whether this is the case.
 

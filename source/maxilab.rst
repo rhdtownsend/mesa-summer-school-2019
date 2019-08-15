@@ -11,7 +11,7 @@ In the MiniLabs, we've been running GYRE within the adiabatic
 approximation, where thermal exchanges between neighboring oscillating
 elements are neglected. For main-sequence stars, these exchanges
 typically have only a small effect on the periods/frequencies of
-oscillation modes; and so, if we're interested mainly in interpreting
+pulsation modes; and so, if we're interested mainly in interpreting
 these periods, the approximation is usually a good one.
 
 In the MaxiLab, we're going to move beyond the adiabatic
@@ -58,7 +58,7 @@ Printing Growth/Decay Rates
 ---------------------------
 
 GYRE assumes that the perturbation :math:`f'(t)` to some quantity
-:math:`f`, caused by an oscillation mode with angular frequency
+:math:`f`, caused by an pulsation mode with angular frequency
 :math:`\sigma`, takes the form
 
 .. math::
