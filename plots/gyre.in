@@ -1,0 +1,63 @@
+&constants
+/
+
+&model
+	model_type = 'POLY'
+	file = 'poly.h5'
+/
+
+&mode
+	l = 0
+	tag = 'l=0'
+	n_pg_max = 3
+/
+
+&osc
+/
+
+&num
+	diff_scheme = 'COLLOC_GL6'
+/
+
+&scan
+        grid_type = 'LINEAR'
+        freq_min = 0.9
+        freq_max = 50
+        n_freq = 100
+        tag_list = 'l=0'
+/
+
+&scan
+        grid_type = 'LINEAR'
+        freq_min = 2.1
+        freq_max = 19.5
+        n_freq = 30
+        tag_list = 'l=1'
+/
+
+&scan
+        grid_type = 'LINEAR'
+        freq_min = 2.8
+        freq_max = 20.4
+        n_freq = 30
+        tag_list = 'l=2'
+/
+
+&scan
+        grid_type = 'LINEAR'
+        freq_min = 3.4
+        freq_max = 21.2
+        n_freq = 30
+        tag_list = 'l=3'
+/
+
+&grid
+/
+
+&ad_output
+	details_template = 'det.l%l.n%n.h5'
+	details_item_list = 'x,xi_r,omega'
+/
+
+&nad_output
+/

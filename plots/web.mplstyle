@@ -1,0 +1,20 @@
+figure.figsize: 6.5, 4.33
+font.family: sans-serif
+font.sans-serif: Lato
+font.size: 14
+axes.titlesize: medium
+axes.labelsize: medium
+legend.fontsize: 12
+legend.frameon : True
+text.usetex: True
+figure.dpi: 300
+lines.markersize: 4
+lines.linewidth: 1.5
+lines.antialiased: False
+path.simplify: False 
+xtick.minor.visible: True
+xtick.top: True
+xtick.direction: in
+ytick.minor.visible: True
+ytick.right: True
+ytick.direction: in
