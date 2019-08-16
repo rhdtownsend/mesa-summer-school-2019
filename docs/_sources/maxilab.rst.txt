@@ -313,13 +313,14 @@ strip boundaries.
    your working directory, to set the initial stellar mass to your
    assigned value. Then, repeat the pre-main sequence to ZAMS run
    (don't forget to do this!), followed by the ZAMS-to-TAMS
-   run. During the latter, note down the effective temperature
-   :math:`T_{\rm eff}` and log luminosity :math:`\log L/L_{\odot}`
-   where either the F or 1-O mode first becomes unstable (you can do
-   this by inspecting the terminal output, or by analyzing the
-   ``history.data`` file after the run). Note the corresponding values
-   when both modes again become stable. Enter these data in the
-   appropriate *Solar Metallicity* columns of the spreadsheet.
+   run. During the latter, note down the log effective temperature
+   :math:`\log T_{\rm eff}/{\rm K}` and log luminosity :math:`\log
+   L/{\rm L_{\odot}}` where either the F or 1-O mode first becomes unstable
+   (you can do this by inspecting the terminal output, or by analyzing
+   the ``history.data`` file after the run). Note the corresponding
+   values when both modes again become stable. Enter these data in the
+   appropriate *Solar Metallicity* columns of the spreadsheet. **Be
+   sure to enter logarithmic values, and use 3 decimal places**.
 
 For some choices of stellar mass, there can be multiple boundaries; if
 you encounter this situation for your assigned stellar mass, then
