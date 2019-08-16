@@ -385,8 +385,9 @@ d}W/{\rm d}x\)</span> via</p>
 <div><div class="admonition-optional-exercise admonition">
 <p class="admonition-title"><em>Optional</em> Exercise</p>
 <p>Modify <code class="docutils literal notranslate"><span class="pre">run_star_extras.f90</span></code> to store <span class="math notranslate nohighlight">\({\rm d}W/{\rm d}\ln
-T\)</span> instead of <span class="math notranslate nohighlight">\({\rm d}W/{\rm d}x\)</span> in the <code class="docutils literal notranslate"><span class="pre">work_f</span></code> and
-<code class="docutils literal notranslate"><span class="pre">work_1f</span></code> variables.</p>
+T\)</span> in new module variables <code class="docutils literal notranslate"><span class="pre">dW_dlnT_f</span></code> and <code class="docutils literal notranslate"><span class="pre">dW_dlnT_1o</span></code>
+variables. Then, change <code class="docutils literal notranslate"><span class="pre">inlist_to_tams_pgstar</span></code> to plot these
+data instead of <span class="math notranslate nohighlight">\({\rm d}W/{\rm d}x\)</span>.</p>
 </div>
 </div></blockquote>
 </div>

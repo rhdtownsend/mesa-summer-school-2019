@@ -267,8 +267,9 @@ d}W/{\rm d}x` via
  .. admonition:: *Optional* Exercise
 
     Modify ``run_star_extras.f90`` to store :math:`{\rm d}W/{\rm d}\ln
-    T` instead of :math:`{\rm d}W/{\rm d}x` in the ``work_f`` and
-    ``work_1f`` variables.
+    T` in new module variables ``dW_dlnT_f`` and ``dW_dlnT_1o``
+    variables. Then, change ``inlist_to_tams_pgstar`` to plot these
+    data instead of :math:`{\rm d}W/{\rm d}x``.
 
 Mapping the Instability Strip
 =============================
