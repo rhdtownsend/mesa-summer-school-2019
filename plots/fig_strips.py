@@ -134,8 +134,8 @@ ax.set_ylim(2.9, 5.5)
 ax.set_title('Solar Metallicity')
 
 fig.tight_layout()
-fig.savefig('fig_strips_1.00.pdf')
-fig.savefig('fig_strips_1.00.png')
+fig.savefig('output/fig_strips_1.00.pdf')
+fig.savefig('output/fig_strips_1.00.png')
 
 # 75% solar
 
@@ -149,8 +149,8 @@ ax.set_ylim(2.9, 5.5)
 ax.set_title('75% Solar Metallicity')
 
 fig.tight_layout()
-fig.savefig('fig_strips_0.75.pdf')
-fig.savefig('fig_strips_0.75.png')
+fig.savefig('output/fig_strips_0.75.pdf')
+fig.savefig('output/fig_strips_0.75.png')
 
 # 50% solar
 
@@ -164,8 +164,8 @@ ax.set_ylim(2.9, 5.5)
 ax.set_title('50% Solar Metallicity')
 
 fig.tight_layout()
-fig.savefig('fig_strips_0.50.pdf')
-fig.savefig('fig_strips_0.50.png')
+fig.savefig('output/fig_strips_0.50.pdf')
+fig.savefig('output/fig_strips_0.50.png')
 
 
 
