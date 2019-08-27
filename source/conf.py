@@ -67,3 +67,7 @@ html_theme_options = {
     'includehidden': True,
     'titles_only': False
 }
+
+# -- Extra stuff --
+
+html_extra_path = [ '../slides', '../plots/output' ]
